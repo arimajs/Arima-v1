@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "lib": ["ES2019"],
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "strict": true,
+    "alwaysStrict": true,
+    "useDefineForClassFields": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "outDir": "dist/",
+    "typeRoots": ["node_modules/@types", "src/typings"]
+  },
+  "include": ["src"]
+}

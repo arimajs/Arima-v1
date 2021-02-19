@@ -1,0 +1,72 @@
+{
+  "name": "arima",
+  "description": "A music quiz discord bot designed for lightly competitive fun! Import playlists from a variety of websites or create your own!",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "private": true,
+  "author": {
+    "name": "Lioness100",
+    "email": "jchickmm2@gmail.com",
+    "url": "https://github.com/Lioness100"
+  },
+  "bugs": "https://github.com/arimajs/Arima/issues",
+  "repository": "https://github.com/arimajs/Arima",
+  "scripts": {
+    "lint": "eslint src --ext ts --fix",
+    "start": "pm2 start pm2.ecosystem.yml --env production",
+    "start:dev": "pm2 start pm2.ecosystem.yml",
+    "test": "yarn lint",
+    "dev": "ts-node --project src/tsconfig.json --files src/index.ts -r dotenv/config NODE_ENV=development",
+    "prebuild": "rm -rf dist",
+    "build": "tsc",
+    "push": "git push --follow-tags origin main"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.4.0",
+    "@typegoose/typegoose": "^7.4.7",
+    "@types/common-tags": "^1.8.0",
+    "colorthief": "^2.3.2",
+    "common-tags": "^1.8.0",
+    "date-fns": "^2.16.1",
+    "discord-akairo": "git://github.com/arimajs/discord-akairo.git#light",
+    "discord-ytdl-core": "^5.0.0",
+    "discord.js-light": "3.5.3",
+    "dotenv": "^8.2.0",
+    "ffmpeg-static": "^4.2.7",
+    "mongoose": "^5.10.18",
+    "node-cleanup": "^2.1.2",
+    "os-utils": "^0.0.14",
+    "prom-client": "^13.1.0",
+    "sodium": "^3.0.2",
+    "soundcloud-scraper": "^4.0.3",
+    "spotify-url-info": "^2.2.0",
+    "string-similarity": "^4.0.4",
+    "youtube-sr": "^3.0.3",
+    "ytdl-core": "^4.4.5"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.10.3",
+    "@types/node": "^14.14.20",
+    "@types/node-cleanup": "^2.1.1",
+    "@types/os-utils": "^0.0.1",
+    "@types/string-similarity": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "husky": "^4.3.7",
+    "lint-staged": "^10.4.0",
+    "pm2": "^4.5.4",
+    "prettier": "^2.2.1",
+    "typescript": "^4.0.3"
+  },
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  }
+}

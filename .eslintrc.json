@@ -1,0 +1,42 @@
+{
+  "extends": [
+    "airbnb-typescript/base",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "plugins": ["prettier", "import", "@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.eslint.json",
+    "tsConfigRootDir": "."
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts"]
+    }
+  },
+  "rules": {
+    "prettier/prettier": "warn",
+    "import/order": "error",
+    "import/no-cycle": "off",
+    "consistent-return": "off",
+    "func-names": "off",
+    "no-console": "off",
+    "no-bitwise": "off",
+    "no-void": "off",
+    "no-plusplus": "off",
+    "no-param-reassign": "off",
+    "no-await-in-loop": "off",
+    "no-continue": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "no-restricted-syntax": "off",
+    "class-methods-use-this": "off",
+    "@typescript-eslint/no-explicit-any": ["error", { "fixToUnknown": true }],
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unnecessary-type-assertion": "off"
+  }
+}
