@@ -34,7 +34,7 @@
     "discord.js-light": "3.5.3",
     "dotenv": "^8.2.0",
     "ffmpeg-static": "^4.2.7",
-    "mongoose": "^5.10.18",
+    "mongoose": "5.10.18",
     "node-cleanup": "^2.1.2",
     "os-utils": "^0.0.14",
     "prom-client": "^13.1.0",

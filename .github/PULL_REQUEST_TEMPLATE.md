@@ -4,7 +4,6 @@
 
 - [ ] Code changes have been tested against my own code, or there are no code
       changes
-- [ ] I have modified Jest's test, or have no need to
 
 ## Type
 
