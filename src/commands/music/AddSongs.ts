@@ -13,7 +13,7 @@ interface Args {
 @ApplyOptions<CommandOptions>('add-songs', {
   aliases: ['add-songs', 'save-songs'],
   description: 'Add a playlist of songs to your playlist',
-  usage: '<name> <playlist url/uri/keywords>',
+  usage: '<name> <playlist>',
   examples: ['Top 100 Songs Weekly', 'spotify:playlist:10J2w5eBSQcBtiRB89V5bU'],
   args: [
     {

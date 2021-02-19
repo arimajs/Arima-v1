@@ -19,7 +19,7 @@ interface Args {
 @ApplyOptions<CommandOptions>('start', {
   aliases: ['start', 'play', 'new-game'],
   description: 'Start a new quiz',
-  usage: '<playlist url/uri/name> [goal] [--answers <artist | song | all>]',
+  usage: '<playlist> [goal] [--answers <artist | song | all>]',
   examples: [
     'myPlaylist 15',
     'spotify:playlist:4SX7KOjWY0THyiNjDSsA9U --answers=artist',
