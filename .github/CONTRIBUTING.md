@@ -13,17 +13,13 @@ please open an issue first so we can discuss.
 - [x] We use [ESLint](https://eslint.org) and [Prettier](https://prettier.io/)
       to enforce a consistent coding style. Any PR that does not follow the
       linting rules will not be merged until the formatting is resolved.
-- [x] We use [Jest](https://jestjs.io/) and
-      [ts-jest](https://kulshekhar.github.io/ts-jest/) to help make sure our bot
-      doesn't break O_o. When needed, please write/modify tests when changing
-      something.
 
 ## Setup
 
 To get ready to work on the codebase, please do the following:
 
 1. Fork & clone the repository, and make sure you're on the **main** branch
-2. Run `npm install`
+2. Run `yarn`
 3. Fill out [`.env.example`](../.env.example) (you can find your soundcloud api
    key [here](https://runkit.com/lioness100/602153c28cacf5001ae3c7e7) and rename
    it to [`.env`](../.env)
