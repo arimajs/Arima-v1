@@ -406,6 +406,7 @@ export default class Game {
         .setColor('RED')
         .setFooter(this.goal ? `Playing to ${this.goal} points` : '')
     );
+    this.streaks.removeAll();
     void this.playNext();
   }
 }
