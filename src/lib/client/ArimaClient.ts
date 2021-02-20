@@ -86,7 +86,7 @@ export default class ArimaClient extends AkairoClient {
         presence: {
           activity: {
             type: 'LISTENING',
-            name: 'music 🎶',
+            name: 'music 🎶 | a!help',
           },
         },
         disableMentions: 'everyone',
