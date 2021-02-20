@@ -17,7 +17,8 @@ export default class SkipCommand extends Command {
       (member) => !member.user.bot && member.id !== message.author.id
     );
     let required = Math.ceil(members.size / 2);
-    if (!required) message.guild!.game!.skip();
+
+    if (required <= 1) return message.guild!.game!.skip();
 
     const sent = await message.channel.send(
       message.embed(
