@@ -55,7 +55,7 @@ export default class CreatePlaylistCommand extends Command {
 
     // TODO: You can only have x playlists unless you support on patreon
     if (playlists.length >= 3)
-      return message.error('You can only have 5 playlists');
+      return message.error('You can only have 3 playlists');
 
     const thumbnail =
       message.attachments.find((a) =>
