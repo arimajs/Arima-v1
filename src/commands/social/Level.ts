@@ -30,7 +30,7 @@ export default class LevelCommand extends Command {
     const self = member.id === message.author.id;
     const users = await User.find({ xp: { $gt: 0 } })
       .select('id level xp')
-      .sort({ xp: 1 })
+      .sort({ xp: -1 })
       .lean();
     const index = ((users as unknown) as { id: Snowflake }[]).findIndex(
       ({ id }) => id === member.id
@@ -49,7 +49,7 @@ export default class LevelCommand extends Command {
         .personalize(member)
         .setTitle(`${self ? 'Your' : `${member.user.tag}'s`} XP Stats`)
         .addFields([
-          { name: 'XP ⭐', value: user.xp, inline: true },
+          { name: 'XP ⭐', value: Math.round(user.xp), inline: true },
           { name: 'Level', value: `Level ${user.level}`, inline: true },
           {
             name: 'Leaderboard Position (Global)',
@@ -65,11 +65,11 @@ export default class LevelCommand extends Command {
           },
           {
             name: 'Points Needed to Level Up',
-            value: `${
+            value: `${Math.round(
               User.xpFor(user.level + 1) - user.xp
-            } XP\n\nTo next level:\n${this.client.util.progressBar(
-              User.xpFor(user.level + 1) - user.xp,
-              User.xpFor(user.level + 1) - User.xpFor(user.level)
+            )} XP\n\nTo next level:\n${this.client.util.progressBar(
+              Math.round(User.xpFor(user.level + 1) - user.xp),
+              Math.round(User.xpFor(user.level + 1) - User.xpFor(user.level))
             )}`,
           },
         ])

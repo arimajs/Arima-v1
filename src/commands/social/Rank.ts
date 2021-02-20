@@ -30,7 +30,7 @@ export default class LevelCommand extends Command {
     const self = member.id === message.author.id;
     const users = await User.find({ xp: { $gt: 0 } })
       .select('id rank matchesWon matchesPlayed')
-      .sort({ xp: 1 })
+      .sort({ xp: -1 })
       .lean();
     const index = ((users as unknown) as { id: Snowflake }[]).findIndex(
       ({ id }) => id === member.id

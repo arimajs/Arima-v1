@@ -33,14 +33,14 @@ export default class LeaderboardCommand extends Command {
           : { id: { $in: members }, matchesPlayed: { $gt: 0 } }
       )
         .limit(5)
-        .sort({ matchesWon: 1 })
+        .sort({ matchesWon: -1 })
         .select('id rank matchesWon matchesPlayed')
         .lean(),
       User.find(
         global ? { xp: { $gt: 0 } } : { id: { $in: members }, xp: { $gt: 0 } }
       )
         .limit(5)
-        .sort({ xp: 1 })
+        .sort({ xp: -1 })
         .select('id rank level xp')
         .lean(),
     ]);
@@ -78,7 +78,9 @@ export default class LeaderboardCommand extends Command {
                       idx + 1
                     )} Place • ${emoji} <@${
                       ((user as unknown) as { id: Snowflake }).id
-                    }> ${emoji} • Level ${user.level} (${user.xp} XP :star:)`;
+                    }> ${emoji} • Level ${user.level} (${Math.round(
+                      user.xp
+                    )} XP :star:)`;
                   })
                   .join('\n')
               : "There's nobody here yet!",
