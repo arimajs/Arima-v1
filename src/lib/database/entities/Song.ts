@@ -4,6 +4,7 @@ import ytsr, { Video } from 'youtube-sr';
 import { Util, StreamDownloader, Store } from 'soundcloud-scraper';
 import { getPreview } from 'spotify-url-info';
 import { getColor } from 'colorthief';
+import { WhatIsIt } from '@typegoose/typegoose/lib/internal/constants';
 import ArimaClient from '../../client/ArimaClient';
 import { spotifySongRegex } from '../../utils/Constants';
 import type { URL } from '../../utils/types';
@@ -24,7 +25,7 @@ export default class Song {
   @prop()
   public url!: URL;
 
-  @prop({ type: () => [Number] })
+  @prop({ type: () => [Number] }, WhatIsIt.ARRAY)
   public color!: [number, number, number] | Promise<[number, number, number]>;
 
   @prop()
