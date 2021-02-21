@@ -1,4 +1,4 @@
-import { Listener, ListenerOptions } from 'discord-akairo';
+import { Listener, ListenerOptions } from '@arimajs/discord-akairo';
 import type { VoiceState } from 'discord.js-light';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
 

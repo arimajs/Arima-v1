@@ -1,4 +1,4 @@
-import { Command, Inhibitor, InhibitorOptions } from 'discord-akairo';
+import { Command, Inhibitor, InhibitorOptions } from '@arimajs/discord-akairo';
 import type { Message } from 'discord.js-light';
 import { commaListsAnd } from 'common-tags';
 import { Guild } from '../lib/database';

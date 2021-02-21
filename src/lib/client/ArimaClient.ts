@@ -5,7 +5,7 @@ import {
   InhibitorHandler,
   ListenerHandler,
   Flag,
-} from 'discord-akairo';
+} from '@arimajs/discord-akairo';
 import { Collection, Message, MessageReaction, User } from 'discord.js-light';
 import { Client } from 'soundcloud-scraper';
 import { ArimaUtil, Logger, PromClient } from '../utils';

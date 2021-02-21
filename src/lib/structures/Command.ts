@@ -1,4 +1,8 @@
-import { Command, CommandOptions, ArgumentOptions } from 'discord-akairo';
+import {
+  Command,
+  CommandOptions,
+  ArgumentOptions,
+} from '@arimajs/discord-akairo';
 import { Message } from 'discord.js-light';
 
 interface Args {

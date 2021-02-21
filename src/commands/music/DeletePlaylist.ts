@@ -1,4 +1,4 @@
-import type { CommandOptions } from 'discord-akairo';
+import type { CommandOptions } from '@arimajs/discord-akairo';
 import type { Message } from 'discord.js-light';
 import type { DocumentType } from '@typegoose/typegoose';
 import type Playlist from '../../lib/database/entities/Playlist';

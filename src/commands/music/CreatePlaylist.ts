@@ -1,4 +1,4 @@
-import { CommandOptions, Argument } from 'discord-akairo';
+import { CommandOptions, Argument } from '@arimajs/discord-akairo';
 import type { Message } from 'discord.js-light';
 import { getColor } from 'colorthief';
 import { Playlist } from '../../lib/database';

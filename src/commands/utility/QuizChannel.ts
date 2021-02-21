@@ -1,4 +1,4 @@
-import { CommandOptions, Argument } from 'discord-akairo';
+import { CommandOptions, Argument } from '@arimajs/discord-akairo';
 import type { Message, TextChannel } from 'discord.js-light';
 import { Guild } from '../../lib/database';
 import Command from '../../lib/structures/Command';

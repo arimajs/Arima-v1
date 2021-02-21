@@ -1,5 +1,5 @@
 import { commaListsAnd } from 'common-tags';
-import { Listener, ListenerOptions } from 'discord-akairo';
+import { Listener, ListenerOptions } from '@arimajs/discord-akairo';
 import type { Guild } from 'discord.js-light';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
 

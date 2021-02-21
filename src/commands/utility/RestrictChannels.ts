@@ -1,4 +1,4 @@
-import { CommandOptions, Argument } from 'discord-akairo';
+import { CommandOptions, Argument } from '@arimajs/discord-akairo';
 import type {
   Message,
   TextChannel,

@@ -1,4 +1,4 @@
-import { Command, Inhibitor, InhibitorOptions } from 'discord-akairo';
+import { Command, Inhibitor, InhibitorOptions } from '@arimajs/discord-akairo';
 import { Message } from 'discord.js-light';
 import ApplyOptions from '../lib/utils/ApplyOptions';
 

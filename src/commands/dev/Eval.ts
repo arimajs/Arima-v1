@@ -1,5 +1,5 @@
 import { inspect } from 'util';
-import type { CommandOptions } from 'discord-akairo';
+import type { CommandOptions } from '@arimajs/discord-akairo';
 import { Message } from 'discord.js-light';
 import { ApplyOptions, Logger } from '../../lib/utils';
 import Command from '../../lib/structures/Command';

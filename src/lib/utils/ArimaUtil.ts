@@ -1,5 +1,5 @@
 import type { Guild, MessageEmbedOptions, TextChannel } from 'discord.js-light';
-import { ClientUtil } from 'discord-akairo';
+import { ClientUtil } from '@arimajs/discord-akairo';
 import EnhancedEmbed from '../structures/EnhancedEmbed';
 import { Guild as GuildDoc } from '../database';
 import Logger from './Logger';

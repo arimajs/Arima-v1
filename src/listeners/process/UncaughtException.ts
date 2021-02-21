@@ -1,4 +1,4 @@
-import { Listener, ListenerOptions } from 'discord-akairo';
+import { Listener, ListenerOptions } from '@arimajs/discord-akairo';
 import { ApplyOptions, Logger } from '../../lib/utils';
 
 @ApplyOptions<ListenerOptions>('uncaughtException', {

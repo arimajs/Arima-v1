@@ -1,5 +1,5 @@
 import { cpuUsage } from 'os-utils';
-import { Listener, ListenerOptions } from 'discord-akairo';
+import { Listener, ListenerOptions } from '@arimajs/discord-akairo';
 import { Logger, ApplyOptions } from '../../lib/utils';
 
 @ApplyOptions<ListenerOptions>('ready', {

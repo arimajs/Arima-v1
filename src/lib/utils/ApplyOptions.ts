@@ -1,4 +1,4 @@
-import { AkairoModule, AkairoModuleOptions } from 'discord-akairo';
+import { AkairoModule, AkairoModuleOptions } from '@arimajs/discord-akairo';
 
 export default function ApplyOptions<T extends AkairoModuleOptions>(
   id: string,

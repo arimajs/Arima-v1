@@ -1,13 +1,12 @@
 /* eslint-disable max-classes-per-file */
-
-declare module 'discord-akairo' {
+declare module '@arimajs/discord-akairo' {
   interface AkairoClient {
     db: import('../lib/database/Database').default;
     player: import('../lib/structures/quiz/Player').default;
     prom: import('../lib/utils/PromClient').default;
-    commandHandler: import('discord-akairo').CommandHandler;
-    listenerHandler: import('discord-akairo').ListenerHandler;
-    inhibitorHandler: import('discord-akairo').InhibitorHandler;
+    commandHandler: import('@arimajs/discord-akairo').CommandHandler;
+    listenerHandler: import('@arimajs/discord-akairo').ListenerHandler;
+    inhibitorHandler: import('@arimajs/discord-akairo').InhibitorHandler;
     games: import('discord.js-light').Collection<
       import('discord.js-light').Snowflake,
       import('../lib/structures/quiz/Game').default
@@ -19,12 +18,12 @@ declare module 'discord-akairo' {
     examples?: string[];
     hidden?: boolean;
     usage?: string;
-    argDescriptions: import('discord-akairo').ArgumentOptions[];
+    argDescriptions: import('@arimajs/discord-akairo').ArgumentOptions[];
   }
 
   interface CommandOptions {
     game?: boolean;
-    argDescriptions?: import('discord-akairo').ArgumentOptions[];
+    argDescriptions?: import('@arimajs/discord-akairo').ArgumentOptions[];
     examples?: string[];
     hidden?: boolean;
     usage?: string;
@@ -64,7 +63,7 @@ declare module 'discord.js' {
   }
 
   interface Message {
-    util: import('discord-akairo').CommandUtil;
+    util: import('@arimajs/discord-akairo').CommandUtil;
     embed(
       title?: string,
       send:

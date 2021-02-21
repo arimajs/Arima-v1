@@ -1,4 +1,7 @@
-import type { CommandOptions, PromptContentSupplier } from 'discord-akairo';
+import type {
+  CommandOptions,
+  PromptContentSupplier,
+} from '@arimajs/discord-akairo';
 import type { Message } from 'discord.js-light';
 import { DocumentType } from '@typegoose/typegoose';
 import Command from '../../lib/structures/Command';

@@ -1,4 +1,4 @@
-import type { CommandOptions } from 'discord-akairo';
+import type { CommandOptions } from '@arimajs/discord-akairo';
 import { Message, Collection, Snowflake } from 'discord.js-light';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
 import Command from '../../lib/structures/Command';

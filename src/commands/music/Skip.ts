@@ -1,4 +1,4 @@
-import type { CommandOptions } from 'discord-akairo';
+import type { CommandOptions } from '@arimajs/discord-akairo';
 import type { Message, MessageReaction, User } from 'discord.js-light';
 import Command from '../../lib/structures/Command';
 import ApplyOptions from '../../lib/utils/ApplyOptions';

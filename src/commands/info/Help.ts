@@ -1,4 +1,4 @@
-import type { CommandOptions } from 'discord-akairo';
+import type { CommandOptions } from '@arimajs/discord-akairo';
 import type { Message, EmbedFieldData } from 'discord.js-light';
 import { commaListsAnd } from 'common-tags';
 import ApplyOptions from '../../lib/utils/ApplyOptions';

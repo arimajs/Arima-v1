@@ -1,4 +1,8 @@
-import { CommandOptions, Argument, ArgumentOptions } from 'discord-akairo';
+import {
+  CommandOptions,
+  Argument,
+  ArgumentOptions,
+} from '@arimajs/discord-akairo';
 import type { DocumentType } from '@typegoose/typegoose';
 import type { Message } from 'discord.js-light';
 import { formatDistanceToNowStrict } from 'date-fns';

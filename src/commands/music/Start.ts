@@ -3,7 +3,7 @@ import {
   CommandOptions,
   Flag,
   PromptContentSupplier,
-} from 'discord-akairo';
+} from '@arimajs/discord-akairo';
 import { Document } from 'mongoose';
 import type { Message, TextChannel, VoiceChannel } from 'discord.js';
 import type Playlist from '../../lib/database/entities/Playlist';

@@ -1,4 +1,4 @@
-import { Command, Listener, ListenerOptions } from 'discord-akairo';
+import { Command, Listener, ListenerOptions } from '@arimajs/discord-akairo';
 import { Message } from 'discord.js-light';
 import { commaListsAnd } from 'common-tags';
 import { ApplyOptions, Logger } from '../../lib/utils';

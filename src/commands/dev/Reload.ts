@@ -1,4 +1,9 @@
-import { CommandOptions, Argument, Listener, Inhibitor } from 'discord-akairo';
+import {
+  CommandOptions,
+  Argument,
+  Listener,
+  Inhibitor,
+} from '@arimajs/discord-akairo';
 import type { Message } from 'discord.js';
 import { ApplyOptions, Logger } from '../../lib/utils';
 import Command from '../../lib/structures/Command';
