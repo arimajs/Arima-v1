@@ -4,7 +4,7 @@
 
 "@arimajs/discord-akairo@arimajs/discord-akairo#light":
   version "8.1.0"
-  resolved "https://codeload.github.com/arimajs/discord-akairo/tar.gz/2c52c0c405648ca5ec410706a1e550d846b249d8"
+  resolved "https://codeload.github.com/arimajs/discord-akairo/tar.gz/3dd81754a9fe24637b846b231384210bebc21ec8"
   dependencies:
     bufferutil "^4.0.3"
     discord.js-light "^3.5.3"
