@@ -238,7 +238,7 @@ export default class Game {
     );
 
     this.collector.once('end', (collection, reason) => {
-      if (reason !== 'time' || this.current?.title !== song.title || this.ended)
+      if (reason !== 'time' || this.current?.url !== song.url || this.ended)
         return;
       this.streaks.removeAll();
       void this.text.send(embed());
@@ -396,6 +396,7 @@ export default class Game {
   public skip(): void {
     if (this.ended) return;
     const song = this.current!;
+    this.collector?.stop();
     void this.text.send(
       this.client.util
         .embed()
