@@ -53,7 +53,8 @@ export default class LevelCommand extends Command {
           {
             name: 'Win Ratio',
             value: `${user.matchesWon}/${user.matchesPlayed} Matches Won (${(
-              user.matchesWon / user.matchesPlayed
+              (user.matchesWon / user.matchesPlayed) *
+              100
             ).toFixed(2)}%)`,
             inline: true,
           },
