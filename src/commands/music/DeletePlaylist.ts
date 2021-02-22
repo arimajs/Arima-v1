@@ -14,6 +14,7 @@ interface Args {
   description: 'Delete one of your playlists',
   usage: '<name>',
   examples: ['vibing', 'classical'],
+  cooldown: 5000,
   args: [
     {
       id: 'playlist',

@@ -15,6 +15,7 @@ interface Args {
     'Create a new playlist. **TIP:** Attach an image to set the playlist thumbnail',
   usage: '<name>',
   examples: ['vibing', 'classics'],
+  cooldown: 5000,
   args: [
     {
       id: 'name',

@@ -23,6 +23,7 @@ interface Args {
   ],
   description: 'Delete a song from your playlist (by index)',
   usage: '<playlist_name> <index>',
+  cooldown: 3000,
   examples: ['vibing 5', 'classical 3'],
   argDescriptions: [
     {

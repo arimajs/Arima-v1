@@ -18,6 +18,7 @@ interface Args {
   description: 'Add a song to your playlist',
   usage: '<name> <song>',
   examples: ['watashi no uso', 'spotify:track:10J2w5eBSQcBtiRB89V5bU'],
+  cooldown: 5000,
   args: [
     {
       id: 'playlist',

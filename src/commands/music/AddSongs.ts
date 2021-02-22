@@ -18,6 +18,7 @@ interface Args {
   description: 'Add a playlist of songs to your playlist',
   usage: '<name> <playlist>',
   examples: ['Top 100 Songs Weekly', 'spotify:playlist:10J2w5eBSQcBtiRB89V5bU'],
+  cooldown: 5000,
   args: [
     {
       id: 'playlist',

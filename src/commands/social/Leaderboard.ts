@@ -12,6 +12,7 @@ interface Args {
   aliases: ['leaderboard', 'lb'],
   description: "View this guild's leaderboard",
   channel: 'guild',
+  cooldown: 5000,
   args: [
     {
       id: 'global',

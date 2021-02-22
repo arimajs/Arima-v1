@@ -5,6 +5,8 @@ import { ApplyOptions, Logger } from '../../lib/utils';
   emitter: 'client',
   event: 'error',
 })
+// TODO COOOOOOLDOWNSSS
+// TODO ALIASES
 export default class ErrorListener extends Listener {
   public exec(info: string): void {
     Logger.error(info);

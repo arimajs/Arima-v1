@@ -6,6 +6,7 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 @ApplyOptions<CommandOptions>('skip', {
   aliases: ['skip', 's', 'next'],
   description: 'Skip the current song (requires a majority vote)',
+  cooldown: 5000,
   game: true,
 })
 export default class SkipCommand extends Command {

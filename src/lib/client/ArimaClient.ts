@@ -27,7 +27,7 @@ export default class ArimaClient extends AkairoClient {
     prefix: async (message: Message) =>
       (await Guild.findOne({ id: message.guild?.id }).select('prefix').lean())
         ?.prefix || process.env.PREFIX!,
-    defaultCooldown: 1e3,
+    defaultCooldown: 2e3,
     automateCategories: true,
     aliasReplacement: /-/g,
     argumentDefaults: {
