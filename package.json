@@ -20,7 +20,7 @@
     "dev": "ts-node --project src/tsconfig.json --files src/index.ts -r dotenv/config NODE_ENV=development",
     "prebuild": "rm -rf dist",
     "build": "tsc",
-    "rollout": "git push origin develop && git checkout main && git merge main && git push && git checkout origin develop"
+    "rollout": "git push origin develop && git checkout main && git merge develop && git push && git checkout develop"
   },
   "dependencies": {
     "@arimajs/discord-akairo": "arimajs/discord-akairo#light",
