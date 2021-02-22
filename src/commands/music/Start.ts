@@ -95,7 +95,7 @@ export default class StartCommand extends Command {
         'Filtering out songs with a duration of less than 30 seconds...',
         true
       );
-      playlist.tracks = playlist.tracks.filter((song) => song.duration < 3e4);
+      playlist.tracks = playlist.tracks.filter((song) => song.duration > 3e4);
     }
 
     if (playlist.tracks.length < 5)
