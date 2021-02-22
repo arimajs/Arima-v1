@@ -40,6 +40,7 @@ export default Structures.extend(
         ...emojis: EmojiResolvable[] | EmojiResolvable[][]
       ) {
         for (const emoji of emojis.flat()) {
+          if (this.deleted) break;
           await this.react(emoji);
         }
       }
