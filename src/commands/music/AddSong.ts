@@ -66,27 +66,22 @@ export default class AddSongCommand extends Command {
     if (playlist.track_count >= 100)
       return message.error('You can only have 100 songs in your playlist');
 
-    const color = await Promise.race([
-      newSong.color,
-      [52, 152, 219] as [number, number, number],
-    ]);
+    const color = await newSong.color;
+
+    message.embed(`Added "${newSong.title}" by ${newSong.author}`, (embed) =>
+      embed
+        .setColor(color)
+        .setThumbnail(newSong.thumbnail)
+        .setDescription(
+          `This is the ${this.client.util.ordinal(
+            playlist.track_count
+          )} song on your playlist "${playlist.title}"`
+        )
+        .setURL(newSong.url)
+    );
 
     playlist.tracks.push({ ...newSong, color });
     playlist.track_count++;
     await playlist.save();
-
-    return message.embed(
-      `Added "${newSong.title}" by ${newSong.author}`,
-      (embed) =>
-        embed
-          .setColor(color)
-          .setThumbnail(newSong.thumbnail)
-          .setDescription(
-            `This is the ${this.client.util.ordinal(
-              playlist.track_count
-            )} song on your playlist "${playlist.title}"`
-          )
-          .setURL(newSong.url)
-    );
   }
 }

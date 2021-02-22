@@ -81,21 +81,7 @@ export default class AddSongCommand extends Command {
         );
     }
 
-    playlist.tracks.push(
-      ...(await Promise.all(
-        newPlaylist.tracks.map((track) => ({
-          ...track,
-          color: Promise.race([
-            track.color,
-            [52, 152, 219] as [number, number, number],
-          ]),
-        }))
-      ))
-    );
     playlist.track_count += newPlaylist.track_count;
-
-    if (playlist.track_count > 100)
-      return message.error('You can only have 100 songs per playlist');
 
     const color = await Promise.race([
       newPlaylist.color,
@@ -115,7 +101,14 @@ export default class AddSongCommand extends Command {
           .setURL(newPlaylist!.url || '')
     );
 
-    playlist.tracks.push(...(await Promise.all(newPlaylist.tracks)));
+    playlist.tracks.push(
+      ...(await Promise.all(
+        newPlaylist.tracks.map(async (track) => ({
+          ...track,
+          color: await track.color,
+        }))
+      ))
+    );
     void playlist.save();
   }
 }
