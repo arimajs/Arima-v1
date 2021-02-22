@@ -1,5 +1,7 @@
 /* eslint-disable max-classes-per-file */
 declare module 'soundcloud-scraper' {
+  await import('../lib/utils/types');
+
   import type { IncomingMessage } from 'http';
   import type { URL } from '../lib/utils/types';
 

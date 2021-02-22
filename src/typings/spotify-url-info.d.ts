@@ -1,4 +1,6 @@
 declare module 'spotify-url-info' {
+  await import('../lib/utils/types');
+
   import type { URL } from '../lib/utils/types';
 
   interface ExternalURLs {
