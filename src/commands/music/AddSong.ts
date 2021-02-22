@@ -67,6 +67,9 @@ export default class AddSongCommand extends Command {
     if (playlist.track_count >= 100)
       return message.error('You can only have 100 songs in your playlist');
 
+    if (playlist.tracks.some(({ url }) => url === newSong.url))
+      return message.error('You already have this song on your playlist');
+
     const color = await newSong.color;
 
     message.embed(`Added "${newSong.title}" by ${newSong.author}`, (embed) =>

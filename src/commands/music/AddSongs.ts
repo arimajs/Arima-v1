@@ -73,12 +73,35 @@ export default class AddSongCommand extends Command {
           )
       );
       newPlaylist.tracks = newPlaylist.tracks.filter(
-        (song) => song.duration < 3e4
+        (song) => song.duration > 3e4
       );
 
       if (!newPlaylist.tracks.length)
         return message.error(
           'There are no songs on the playlist less than 30 seconds long'
+        );
+    }
+
+    if (
+      newPlaylist.tracks.some(({ url }) =>
+        playlist.tracks.some((track) => track.url === url)
+      )
+    ) {
+      await message.channel.send(
+        this.client.util
+          .embed()
+          .personalize(message.author)
+          .setColor('BLUE')
+          .setTitle('Filtering out songs you already have on your playlist...')
+      );
+
+      newPlaylist.tracks = newPlaylist.tracks.filter(
+        ({ url }) => !playlist.tracks.some((track) => track.url === url)
+      );
+
+      if (!newPlaylist.tracks.length)
+        return message.error(
+          "There are no songs songs on the playlist you don't already have"
         );
     }
 
