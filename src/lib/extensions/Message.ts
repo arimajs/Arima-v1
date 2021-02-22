@@ -49,7 +49,11 @@ export default Structures.extend(
       ) {
         for (const emoji of emojis.flat()) {
           if (this.deleted) break;
-          await this.react(emoji);
+          try {
+            await this.react(emoji);
+          } catch (err) {
+            break;
+          }
         }
       }
 
