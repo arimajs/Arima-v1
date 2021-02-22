@@ -81,7 +81,17 @@ export default class AddSongCommand extends Command {
         );
     }
 
-    playlist.tracks.push(...newPlaylist.tracks);
+    playlist.tracks.push(
+      ...(await Promise.all(
+        newPlaylist.tracks.map((track) => ({
+          ...track,
+          color: Promise.race([
+            track.color,
+            [52, 152, 219] as [number, number, number],
+          ]),
+        }))
+      ))
+    );
     playlist.track_count += newPlaylist.track_count;
 
     if (playlist.track_count > 100)
