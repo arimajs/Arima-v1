@@ -26,7 +26,7 @@ export default class PingCommand extends Command {
 
   public async run(message: Message, { leaderboard }: Args): Promise<void> {
     if (leaderboard)
-      message.embed('Ping Leaderboard', (embed) =>
+      void message.embed('Ping Leaderboard', (embed) =>
         embed
           .addFields(
             this.leaderboard
@@ -37,8 +37,8 @@ export default class PingCommand extends Command {
           .setFooter('The Leaderboard is reset every restart')
       );
     else {
-      const sent = await message.channel.send(
-        message.embed(':ping_pong:  Pinging...').setColor('BLUE')
+      const sent = await message.embed(':ping_pong:  Pinging...', (embed) =>
+        embed.setColor('BLUE')
       );
 
       const diff =

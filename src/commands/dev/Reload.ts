@@ -30,7 +30,7 @@ export default class ReloadCommand extends Command {
 
     try {
       module.reload();
-      message.embed(
+      void message.embed(
         `The "${
           module.id
         }" ${module.handler.classToHandle.name.toLowerCase()} was reloaded!`,

@@ -55,7 +55,7 @@ export default class EvalCommand extends Command {
         output = 'Output too long...';
       }
 
-      message.embed(`Eval Results`, (embed) =>
+      void message.embed(`Eval Results`, (embed) =>
         embed.addFields([
           { name: '📥 Input', value: `${cb}js\n${args.code}\n${cb}` },
           { name: '📤 Output', value: `${cb}js\n${output}\n${cb}` },
@@ -75,7 +75,7 @@ export default class EvalCommand extends Command {
         err = 'Error too long...';
       }
 
-      message.embed(`Eval Results`, (embed) =>
+      void message.embed(`Eval Results`, (embed) =>
         embed
           .addFields([
             { name: '📥 Input', value: `${cb}js\n${args.code}\n${cb}` },

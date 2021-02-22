@@ -174,9 +174,8 @@ export default class ArimaClient extends AkairoClient {
           );
           const emotes = [...numbers, '❌'];
 
-          const sent = await message.channel.send(
-            message
-              .embed('Search Results')
+          const sent = await message.embed('Search Results', (embed) =>
+            embed
               .setDescription(
                 playlist
                   .map(
@@ -224,9 +223,8 @@ export default class ArimaClient extends AkairoClient {
         if (Array.isArray(song)) {
           const numbers = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣'].slice(0, song.length);
           const emotes = [...numbers, '❌'];
-          const sent = await message.channel.send(
-            message
-              .embed('Search Results')
+          const sent = await message.embed('Search Results', (embed) =>
+            embed
               .setDescription(
                 song
                   .map(
@@ -264,8 +262,6 @@ export default class ArimaClient extends AkairoClient {
         return validate(updatedSong || song);
       },
     });
-
-    Logger.info(`Loaded ${this.commandHandler.modules.size} commands`);
 
     this.inhibitorHandler.loadAll();
     Logger.info(`Loaded ${this.inhibitorHandler.modules.size} inhibitors`);

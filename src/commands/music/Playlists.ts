@@ -25,7 +25,7 @@ export default class PlaylistsCommand extends Command {
       );
 
     const numbers = ['one', 'two', 'three', 'four', 'five'];
-    message.embed('Your Playlists', (embed) =>
+    void message.embed('Your Playlists', (embed) =>
       embed
         .setDescription(
           playlists

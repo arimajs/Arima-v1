@@ -7,12 +7,16 @@ declare module 'discord.js' {
   }
 
   interface Message {
+    embed(title?: string): EnhancedEmbed;
+    embed(
+      title: string,
+      send: true | ((embed: EnhancedEmbed) => EnhancedEmbed | void)
+    ): Promise<Message>;
     embed(
       title?: string,
-      send: boolean | ((embed: EnhancedEmbed) => unknown) = false,
-      useUtil = true
-    ): EnhancedEmbed;
-    error(message: string, explanation?: string, useUtil = true): void;
+      send?: true | ((embed: EnhancedEmbed) => EnhancedEmbed | void)
+    ): EnhancedEmbed | Promise<Message>;
+    error(message: string, explanation?: string): void;
     reactAll(...emojis: EmojiResolvable[] | EmojiResolvable[][]): Promise<void>;
     poll(id: Snowflake): Promise<boolean>;
     attemptEdit(content: unknown): void;

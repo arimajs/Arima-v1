@@ -91,14 +91,9 @@ export default class StartCommand extends Command {
       !(playlist instanceof Document) &&
       playlist.tracks.some((song) => song.duration < 3e4)
     ) {
-      await message.channel.send(
-        this.client.util
-          .embed()
-          .personalize(message.author)
-          .setColor('BLUE')
-          .setTitle(
-            'Filtering out songs with a duration of less than 30 seconds...'
-          )
+      await message.embed(
+        'Filtering out songs with a duration of less than 30 seconds...',
+        true
       );
       playlist.tracks = playlist.tracks.filter((song) => song.duration < 3e4);
     }

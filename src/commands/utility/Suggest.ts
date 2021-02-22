@@ -9,7 +9,7 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 })
 export default class SuggestCommand extends Command {
   public run(message: Message): void {
-    message.embed('Join my support server!', (embed) =>
+    void message.embed('Join my support server!', (embed) =>
       embed.setURL(process.env.SUPPORT_SERVER_INVITE!)
     );
   }

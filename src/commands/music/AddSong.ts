@@ -72,16 +72,18 @@ export default class AddSongCommand extends Command {
 
     const color = await newSong.color;
 
-    message.embed(`Added "${newSong.title}" by ${newSong.author}`, (embed) =>
-      embed
-        .setColor(color)
-        .setThumbnail(newSong.thumbnail)
-        .setDescription(
-          `This is the ${this.client.util.ordinal(
-            playlist.track_count
-          )} song on your playlist "${playlist.title}"`
-        )
-        .setURL(newSong.url)
+    void message.embed(
+      `Added "${newSong.title}" by ${newSong.author}`,
+      (embed) =>
+        embed
+          .setColor(color)
+          .setThumbnail(newSong.thumbnail)
+          .setDescription(
+            `This is the ${this.client.util.ordinal(
+              playlist.track_count
+            )} song on your playlist "${playlist.title}"`
+          )
+          .setURL(newSong.url)
     );
 
     playlist.tracks.push({ ...newSong, color });

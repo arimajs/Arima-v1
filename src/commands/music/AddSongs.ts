@@ -63,14 +63,9 @@ export default class AddSongCommand extends Command {
   ): Promise<unknown> {
     // TODO only x amount of songs unless you support on patreon
     if (newPlaylist.tracks.some((song) => song.duration < 3e4)) {
-      await message.channel.send(
-        this.client.util
-          .embed()
-          .personalize(message.author)
-          .setColor('BLUE')
-          .setTitle(
-            'Filtering out songs with a duration of less than 30 seconds...'
-          )
+      await message.embed(
+        'Filtering out songs with a duration of less than 30 seconds...',
+        true
       );
       newPlaylist.tracks = newPlaylist.tracks.filter(
         (song) => song.duration > 3e4
@@ -87,12 +82,9 @@ export default class AddSongCommand extends Command {
         playlist.tracks.some((track) => track.url === url)
       )
     ) {
-      await message.channel.send(
-        this.client.util
-          .embed()
-          .personalize(message.author)
-          .setColor('BLUE')
-          .setTitle('Filtering out songs you already have on your playlist...')
+      await message.embed(
+        'Filtering out songs you already have on your playlist...',
+        true
       );
 
       newPlaylist.tracks = newPlaylist.tracks.filter(
@@ -111,7 +103,7 @@ export default class AddSongCommand extends Command {
       newPlaylist.color,
       [52, 152, 219] as [number, number, number],
     ]);
-    message.embed(
+    void message.embed(
       `All songs from "${newPlaylist.title}" by ${
         newPlaylist!.author
       } have been merged!`,

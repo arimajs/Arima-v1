@@ -46,7 +46,7 @@ export default class LeaderboardCommand extends Command {
         .lean(),
     ]);
 
-    message.embed(
+    void message.embed(
       `${global ? 'Global' : `${message.guild!.name}'s`} Leaderboard`,
       (embed) =>
         embed.addFields([

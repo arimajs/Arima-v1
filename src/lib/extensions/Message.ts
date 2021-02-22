@@ -2,6 +2,7 @@ import {
   Structures,
   EmojiResolvable,
   MessageReaction,
+  Message,
   User,
   Snowflake,
 } from 'discord.js-light';
@@ -11,10 +12,15 @@ export default Structures.extend(
   'Message',
   (Message) =>
     class extends Message {
+      public embed(title?: string): EnhancedEmbed;
+      public embed(
+        title: string,
+        send: true | ((embed: EnhancedEmbed) => EnhancedEmbed | void)
+      ): Promise<Message>;
       public embed(
         title?: string,
-        send: boolean | ((embed: EnhancedEmbed) => unknown) = false
-      ) {
+        send?: true | ((embed: EnhancedEmbed) => EnhancedEmbed | void)
+      ): EnhancedEmbed | Promise<Message> {
         const embed = new EnhancedEmbed()
           .personalize(this.author)
           .setColor('BLUE');
@@ -23,14 +29,16 @@ export default Structures.extend(
 
         if (send) {
           if (typeof send === 'function') send(embed);
-          void this.channel.send(embed);
+          return new Promise((resolve) => {
+            void this.channel.send(embed).then(resolve);
+          });
         }
 
         return embed;
       }
 
-      public error(message: string, explanation?: string) {
-        this.embed(`:x: ${message}`, (embed) => {
+      public error(message: string, explanation?: string): void {
+        void this.embed(`:x: ${message}`, (embed) => {
           embed.setColor('RED');
           if (explanation) embed.setDescription(explanation);
         });

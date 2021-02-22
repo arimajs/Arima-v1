@@ -21,10 +21,9 @@ export default class SkipCommand extends Command {
 
     if (required <= 1) return message.guild!.game!.skip();
 
-    const sent = await message.channel.send(
-      message.embed(
-        `Would you like to skip this song? (1/${required} votes collected)`
-      )
+    const sent = await message.embed(
+      `Would you like to skip this song? (1/${required} votes collected)`,
+      true
     );
 
     void sent.react('✅');

@@ -35,17 +35,18 @@ interface Args {
 })
 export default class DeletePlaylistCommand extends Command {
   public async run(message: Message, { playlist }: Args): Promise<void> {
-    const sent = await message.channel.send(
-      message
-        .embed(`Are you sure you want to delete "${playlist.title}"?`)
-        .setDescription('You cannot undo this action')
-        .setColor(
-          this.client.util.isBlue(
-            playlist.color as [number, number, number],
-            'RED'
+    const sent = await message.embed(
+      `Are you sure you want to delete "${playlist.title}"?`,
+      (embed) =>
+        embed
+          .setDescription('You cannot undo this action')
+          .setColor(
+            this.client.util.isBlue(
+              playlist.color as [number, number, number],
+              'RED'
+            )
           )
-        )
-        .setThumbnail(playlist.thumbnail)
+          .setThumbnail(playlist.thumbnail)
     );
 
     const confirm = await sent.poll(message.author.id);

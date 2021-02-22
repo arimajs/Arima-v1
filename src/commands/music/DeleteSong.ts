@@ -79,20 +79,19 @@ export default class DeleteSongCommand extends Command {
   public async run(message: Message, { playlist, index }: Args): Promise<void> {
     const track = playlist.tracks[index - 1];
 
-    const sent = await message.channel.send(
-      message
-        .embed(
-          `Are you sure you want to delete "${track.title}" by ${track.author}?`
-        )
-        .setColor(
-          this.client.util.isBlue(
-            track.color as [number, number, number],
-            'RED'
+    const sent = await message.embed(
+      `Are you sure you want to delete "${track.title}" by ${track.author}?`,
+      (embed) =>
+        embed
+          .setColor(
+            this.client.util.isBlue(
+              track.color as [number, number, number],
+              'RED'
+            )
           )
-        )
-        .setThumbnail(track.thumbnail)
-        .setDescription('You cannot undo this action')
-        .setURL(track.url)
+          .setThumbnail(track.thumbnail)
+          .setDescription('You cannot undo this action')
+          .setURL(track.url)
     );
 
     const confirm = await sent.poll(message.author.id);
