@@ -36,30 +36,25 @@ export default class EnhancedEmbed extends MessageEmbed {
     const collector = current.createReactionCollector(
       (reaction: MessageReaction, author: User) =>
         emojis.includes(reaction.emoji.name) && ids.includes(author.id),
-      { time: 1.2e5 }
+      { dispose: true }
     );
 
-    collector.on('collect', (reaction, user) => {
+    const paginate = (reaction: MessageReaction) => {
+      console.log('test');
       try {
         if (reaction.emoji.name === emojis[0])
           page = page ? page - 1 : pages.length - 1;
         else page = page + 1 < pages.length ? page + 1 : 0;
 
-        void reaction.users.remove(user.id).catch(() => {});
         void current.edit(new EnhancedEmbed(pages[page]).setFooter(footer()));
       } catch (err) {
         void current.edit(
           message.embed("You're changing pages too fast!").setColor('RED')
         );
-        void current.reactions.removeAll().catch(() => {});
       }
-    });
+    };
 
-    collector.on('end', () =>
-      current.deleted
-        ? null
-        : void current.reactions.removeAll().catch(() => {})
-    );
+    collector.on('collect', paginate).on('remove', paginate);
 
     return current;
   }

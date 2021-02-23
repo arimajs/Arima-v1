@@ -38,11 +38,7 @@ interface Args {
         "The index of the song (use `a!playlist-info` if you're not sure",
     },
   ],
-  clientPermissions: [
-    'ADD_REACTIONS',
-    'READ_MESSAGE_HISTORY',
-    'MANAGE_MESSAGES',
-  ],
+  clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
   *args(): Generator<ArgumentOptions> {
     const help = yield {
       match: 'flag',
@@ -79,10 +75,10 @@ export default class DeleteSongCommand extends Command {
   public async run(message: Message, { playlist, index }: Args): Promise<void> {
     const track = playlist.tracks[index - 1];
 
-    const sent = await message.embed(
-      `Are you sure you want to delete "${track.title}" by ${track.author}?`,
-      (embed) =>
+    const songEmbed = (title: string, description: string) =>
+      message.embed(title, (embed) =>
         embed
+          .setDescription(description)
           .setColor(
             this.client.util.isBlue(
               track.color as [number, number, number],
@@ -90,8 +86,12 @@ export default class DeleteSongCommand extends Command {
             )
           )
           .setThumbnail(track.thumbnail)
-          .setDescription('You cannot undo this action')
           .setURL(track.url)
+      );
+
+    const sent = await songEmbed(
+      `Are you sure you want to delete "${track.title}" by ${track.author}?`,
+      'You cannot undo this action'
     );
 
     const confirm = await sent.poll(message.author.id);
@@ -100,19 +100,15 @@ export default class DeleteSongCommand extends Command {
       playlist.track_count--;
       await playlist.save();
 
-      return sent.attemptEdit(
-        sent.embeds[0]
-          .setTitle(`Deleted "${track.title}" by ${track.author}`)
-          .setDescription(
-            `You now have ${playlist.tracks.length} songs on your playlist`
-          )
+      return void songEmbed(
+        `Deleted "${track.title}" by ${track.author}`,
+        `You now have ${playlist.tracks.length} songs on your playlist`
       );
     }
 
-    void sent.edit(
-      sent.embeds[0]
-        .setTitle(`Ok, I won't delete "${track.title}" by ${track.author}`)
-        .setDescription('Whew, that was a close one')
+    void songEmbed(
+      `Ok, I won't delete "${track.title}" by ${track.author}`,
+      'Whew, that was a close one'
     );
   }
 }

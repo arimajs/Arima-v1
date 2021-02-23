@@ -22,13 +22,13 @@ export default class Command extends Listener {
               missing.length
                 ? commaListsAnd`Unfortunately, I noticed I didn't have all the permissions I require. It is highly recommended you kick me and invite me back through [this link](https://discord.com/api/oauth2/authorize?client_id=${
                     this.client.user!.id
-                  }&permissions=11889728&scope=bot), or grant me my missing permissions(${missing.map(
+                  }&permissions=3492928&scope=bot), or grant me my missing permissions(${missing.map(
                     (perm) => `\`${perm}\``
                   )})\n\n`
                 : ''
             }If you have any ${
               missing.length ? 'other ' : ''
-            } issues or want to suggest a feature, please feel free to join my [support server](${
+            }issues or want to suggest a feature, please feel free to join my [support server](${
               process.env.SUPPORT_SERVER_INVITE
             })`
           )

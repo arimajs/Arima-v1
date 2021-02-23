@@ -27,19 +27,14 @@ interface Args {
       },
     },
   ],
-  clientPermissions: [
-    'ADD_REACTIONS',
-    'READ_MESSAGE_HISTORY',
-    'MANAGE_MESSAGES',
-  ],
+  clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
 })
 export default class DeletePlaylistCommand extends Command {
   public async run(message: Message, { playlist }: Args): Promise<void> {
-    const sent = await message.embed(
-      `Are you sure you want to delete "${playlist.title}"?`,
-      (embed) =>
+    const playlistEmbed = (title: string, description: string) =>
+      message.embed(title, (embed) =>
         embed
-          .setDescription('You cannot undo this action')
+          .setDescription(description)
           .setColor(
             this.client.util.isBlue(
               playlist.color as [number, number, number],
@@ -47,22 +42,22 @@ export default class DeletePlaylistCommand extends Command {
             )
           )
           .setThumbnail(playlist.thumbnail)
+      );
+
+    const sent = await playlistEmbed(
+      `Are you sure you want to delete "${playlist.title}"?`,
+      'You cannot undo this action'
     );
 
     const confirm = await sent.poll(message.author.id);
     if (confirm) {
       await playlist.deleteOne();
-      return sent.attemptEdit(
-        sent.embeds[0]
-          .setTitle(`Deleted "${playlist.title}"`)
-          .setDescription('')
-      );
+      return void playlistEmbed(`Deleted "${playlist.title}"`, '');
     }
 
-    void sent.edit(
-      sent.embeds[0]
-        .setTitle(`Ok, I won't delete "${playlist.title}"`)
-        .setDescription('Whew, that was a close one')
+    void playlistEmbed(
+      `Ok, I won't delete "${playlist.title}"`,
+      'Whew, that was a close one'
     );
   }
 }

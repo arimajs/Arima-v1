@@ -113,7 +113,6 @@ export default class ArimaClient extends AkairoClient {
           'MESSAGE_UPDATE',
           'MESSAGE_REACTION_REMOVE_EMOJI',
           'MESSAGE_REACTION_REMOVE_ALL',
-          'MESSAGE_REACTION_REMOVE',
           'CHANNEL_PINS_UPDATE',
           'GUILD_MEMBER_ADD',
           'GUILD_MEMBER_UPDATE',

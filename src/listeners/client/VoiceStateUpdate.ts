@@ -43,12 +43,7 @@ export default class VoiceStateUpdateListener extends Listener {
     )
       return void game.end('end');
 
-    if (
-      newState &&
-      !newState.deaf &&
-      me &&
-      newState.guild.me!.hasPermission('DEAFEN_MEMBERS')
-    )
-      return void newState.setDeaf(true);
+    if (newState && !newState.deaf && me)
+      return void newState.setSelfDeaf(true);
   }
 }

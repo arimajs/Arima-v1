@@ -65,7 +65,7 @@ export default Structures.extend(
             emojis.includes(reaction.emoji.name) && user.id === id,
           { max: 1, time: 3e4 }
         );
-        await this.reactions.removeAll().catch(() => {});
+        void this.delete();
         return !!(reactions.first()?.emoji.name === emojis[0]);
       }
 

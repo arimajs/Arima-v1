@@ -38,7 +38,7 @@ export default class MissingPermissionsListener extends Listener {
             (perm) => `\`${perm}\``
           )} or reinvite me using [this link](https://discord.com/api/oauth2/authorize?client_id=${
             this.client.user!.id
-          }&permissions=11889728&scope=bot)`
+          }&permissions=34929288&scope=bot)`
         );
     }
   }

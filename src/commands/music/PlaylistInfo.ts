@@ -27,11 +27,7 @@ interface Args {
       },
     },
   ],
-  clientPermissions: [
-    'ADD_REACTIONS',
-    'MANAGE_MESSAGES',
-    'READ_MESSAGE_HISTORY',
-  ],
+  clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
 })
 export default class PlaylistInfoCommand extends Command {
   public async run(message: Message, { playlist }: Args): Promise<void> {

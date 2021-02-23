@@ -75,7 +75,6 @@ interface Args {
   clientPermissions: [
     'CONNECT',
     'SPEAK',
-    'DEAFEN_MEMBERS',
     'ADD_REACTIONS',
     'READ_MESSAGE_HISTORY',
   ],
@@ -124,7 +123,7 @@ export default class StartCommand extends Command {
       return message.error('There was an error joining the voice channel');
     }
 
-    await message.guild!.me!.voice.setDeaf(true);
+    await message.guild!.me!.voice.setSelfDeaf(true);
 
     const [text, voice] = (await Promise.all([
       this.client.channels.fetch(message.channel.id, false),
