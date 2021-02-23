@@ -52,7 +52,6 @@ export default class CommandsCommand extends Command {
                       inline: true,
                     }))
                 )
-                .setFooter('The arrows will deactivate after 30 seconds')
             ),
         ],
         [message.author.id]
