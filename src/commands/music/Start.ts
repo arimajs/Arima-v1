@@ -77,7 +77,6 @@ interface Args {
     'SPEAK',
     'DEAFEN_MEMBERS',
     'ADD_REACTIONS',
-    'MANAGE_MESSAGES',
     'READ_MESSAGE_HISTORY',
   ],
   game: false,

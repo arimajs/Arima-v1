@@ -15,7 +15,8 @@ interface Args {
 
 @ApplyOptions<CommandOptions>('add-songs', {
   aliases: ['add-songs', 'save-songs'],
-  description: 'Add a playlist of songs to your playlist',
+  description:
+    'Add a playlist of songs to your custom playlist (`a!create-playlist`)',
   usage: '<name> <playlist>',
   examples: ['Top 100 Songs Weekly', 'spotify:playlist:10J2w5eBSQcBtiRB89V5bU'],
   cooldown: 5000,
@@ -50,11 +51,7 @@ interface Args {
       },
     },
   ],
-  clientPermissions: [
-    'ADD_REACTIONS',
-    'MANAGE_MESSAGES',
-    'READ_MESSAGE_HISTORY',
-  ],
+  clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
 })
 export default class AddSongCommand extends Command {
   public async run(
