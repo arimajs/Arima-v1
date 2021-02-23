@@ -49,8 +49,12 @@ export default class LevelCommand extends Command {
         .personalize(member)
         .setTitle(`${self ? 'Your' : `${member.user.tag}'s`} XP Stats`)
         .addFields([
-          { name: 'XP ⭐', value: Math.round(user.xp), inline: true },
-          { name: 'Level', value: `Level ${user.level}`, inline: true },
+          { name: 'XP ⭐', value: Math.floor(user.xp), inline: true },
+          {
+            name: 'Level',
+            value: `Level ${Math.floor(user.level)}`,
+            inline: true,
+          },
           {
             name: 'Leaderboard Position (Global)',
             value: `${this.client.util.ordinal(index + 1)} Place`,
@@ -65,11 +69,11 @@ export default class LevelCommand extends Command {
           },
           {
             name: 'Points Needed to Level Up',
-            value: `${Math.round(
+            value: `${Math.floor(
               User.xpFor(user.level + 1) - user.xp
             )} XP\n\nTo next level:\n${this.client.util.progressBar(
-              Math.round(User.xpFor(user.level + 1) - user.xp),
-              Math.round(User.xpFor(user.level + 1) - User.xpFor(user.level))
+              Math.floor(User.xpFor(user.level + 1) - user.xp),
+              Math.floor(User.xpFor(user.level + 1) - User.xpFor(user.level))
             )}`,
           },
         ])

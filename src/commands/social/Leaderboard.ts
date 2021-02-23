@@ -80,7 +80,7 @@ export default class LeaderboardCommand extends Command {
                       idx + 1
                     )} Place • ${emoji} <@${
                       ((user as unknown) as { id: Snowflake }).id
-                    }> ${emoji} • Level ${user.level} (${Math.round(
+                    }> ${emoji} • Level ${Math.floor(user.level)} (${Math.floor(
                       user.xp
                     )} XP :star:)`;
                   })

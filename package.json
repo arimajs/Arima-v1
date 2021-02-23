@@ -1,7 +1,7 @@
 {
   "name": "arima",
   "description": "A music quiz discord bot designed for lightly competitive fun! Import playlists from a variety of websites or create your own!",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "main": "dist/index.js",
   "license": "MIT",
   "private": true,

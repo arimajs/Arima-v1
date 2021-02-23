@@ -54,11 +54,15 @@ export default class User extends Entity {
   }
 
   public static levelFor(xp: number): number {
-    return xp > 62500 ? 25 + (xp - 62500) / 5000 : ~~(0.1 * Math.sqrt(xp));
+    return Math.floor(
+      xp > 62500 ? 25 + (xp - 62500) / 5000 : ~~(0.1 * Math.sqrt(xp))
+    );
   }
 
   public static xpFor(level: number): number {
-    return level > 25 ? 5000 * (level - 24) + 57600 : level ** 2 * 100;
+    return Math.floor(
+      level > 25 ? 5000 * (level - 24) + 57600 : level ** 2 * 100
+    );
   }
 
   public static matchesFor<T extends keyof typeof ranks>(
@@ -72,7 +76,7 @@ export default class User extends Entity {
       (Object.keys(ranks).find(
         (rank) =>
           (ranks as Record<string, number>)[rank] ===
-          Math.round(matchesWon / 10) * 10
+          Math.floor(matchesWon / 10) * 10
       ) as keyof typeof ranks) || 'legendary'
     );
   }

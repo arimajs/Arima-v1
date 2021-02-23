@@ -377,7 +377,9 @@ export default class Game {
           const emoji = UserDoc.getEmoji(user.rank, this.text);
           await this.text.send(
             `${member} ${emoji}, you earned :star: **${xp}** XP${
-              levelUp ? ` and have leveled up to Level **${user.level}**` : ''
+              levelUp
+                ? ` and have leveled up to Level **${Math.floor(user.level)}**`
+                : ''
             }!${
               rankUp
                 ? ` You also ranked up to a${
