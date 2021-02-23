@@ -1,7 +1,7 @@
 {
   "name": "arima",
   "description": "A music quiz discord bot designed for lightly competitive fun! Import playlists from a variety of websites or create your own!",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "dist/index.js",
   "license": "MIT",
   "private": true,
@@ -19,8 +19,7 @@
     "test": "yarn lint",
     "dev": "ts-node --project src/tsconfig.json --files src/index.ts -r dotenv/config NODE_ENV=development",
     "prebuild": "rm -rf dist",
-    "build": "tsc",
-    "rollout": "git push origin develop && git checkout main && git merge develop && git push && git checkout develop"
+    "build": "tsc"
   },
   "dependencies": {
     "@arimajs/discord-akairo": "arimajs/discord-akairo#light",

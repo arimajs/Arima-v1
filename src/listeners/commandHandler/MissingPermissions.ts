@@ -34,7 +34,7 @@ export default class MissingPermissionsListener extends Listener {
       )
         message.error(
           "I don't have enough permissions",
-          `Please grant me the permissions ${(missing as string[]).map(
+          commaListsAnd`Please grant me the permissions ${(missing as string[]).map(
             (perm) => `\`${perm}\``
           )} or reinvite me using [this link](https://discord.com/api/oauth2/authorize?client_id=${
             this.client.user!.id

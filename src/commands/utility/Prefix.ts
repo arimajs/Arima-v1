@@ -21,6 +21,7 @@ interface Args {
       prompt: { optional: true },
     },
   ],
+  userPermissions: ['MANAGE_GUILD'],
 })
 export default class PrefixCommand extends Command {
   public async run(message: Message, { prefix }: Args): Promise<unknown> {
@@ -42,11 +43,6 @@ export default class PrefixCommand extends Command {
       return message.embed(
         `My current prefix is \`${settings?.prefix || process.env.PREFIX}\``,
         (embed) => embed.setDescription(`I also respond to ${this.client.user}`)
-      );
-
-    if (!message.member!.hasPermission('MANAGE_GUILD'))
-      return message.error(
-        'You must have the `MANAGE_GUILD` permission to change the prefix'
       );
 
     if (prefix.length > 100)
