@@ -67,6 +67,7 @@ export default class AddSongCommand extends Command {
       return message.error('You already have this song on your playlist');
 
     const color = await newSong.color;
+    playlist.track_count++;
 
     void message.embed(
       `Added "${newSong.title}" by ${newSong.author}`,
@@ -83,7 +84,6 @@ export default class AddSongCommand extends Command {
     );
 
     playlist.tracks.push({ ...newSong, color });
-    playlist.track_count++;
     await playlist.save();
   }
 }
