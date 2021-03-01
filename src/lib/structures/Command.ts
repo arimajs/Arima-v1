@@ -5,10 +5,6 @@ import {
 } from '@arimajs/discord-akairo';
 import { Message } from 'discord.js-light';
 
-interface Args {
-  help: boolean;
-}
-
 export default abstract class ArimaCommand extends Command {
   public game?: boolean;
 
@@ -31,15 +27,6 @@ export default abstract class ArimaCommand extends Command {
       game,
     } = options;
 
-    if (Array.isArray(args)) {
-      args.unshift({
-        id: 'help',
-        match: 'flag',
-        flag: ['--help', '-h'],
-        description: 'Shows help information of this command.',
-      });
-    }
-
     if (Array.isArray(clientPermissions)) {
       (clientPermissions as string[]).push('SEND_MESSAGES', 'EMBED_LINKS');
     }
@@ -55,20 +42,19 @@ export default abstract class ArimaCommand extends Command {
     this.channel = this.game === undefined ? this.channel : 'guild';
   }
 
-  public async exec(message: Message, args: Args): Promise<void> {
-    if (args.help)
-      this.handler.modules.get('commands')?.exec(message, { command: this });
-    else {
-      const handle = (err: unknown): unknown =>
-        this.client.listenerHandler.modules
-          .get('error')!
-          .exec(err, message, this);
+  public async exec(
+    message: Message,
+    args: Record<string, unknown>
+  ): Promise<void> {
+    const handle = (err: unknown): unknown =>
+      this.client.listenerHandler.modules
+        .get('error')!
+        .exec(err, message, this);
 
-      try {
-        await Promise.resolve(this.run(message, args)).catch(handle);
-      } catch (err) {
-        handle(err);
-      }
+    try {
+      await Promise.resolve(this.run(message, args)).catch(handle);
+    } catch (err) {
+      handle(err);
     }
   }
 

@@ -32,7 +32,14 @@ export default class InfoCommand extends Command {
             Date.now() - this.client.uptime!
           )}** and am currently playing **${this.client.games.size} games**!`
         )
-        .addFields()
+        .addField(
+          "Arima's Nexus",
+          `[Invite Me](https://discord.com/api/oauth2/authorize?client_id=${
+            this.client.user!.id
+          }&permissions=3492928&scope=bot) • [Support Server](${
+            process.env.SUPPORT_SERVER_INVITE
+          }) • [Documentation Website](https://arima.fun) • [Patreon](https://patreon.com/ArimaBot)`
+        )
     );
   }
 }

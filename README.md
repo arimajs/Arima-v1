@@ -4,6 +4,7 @@
 
 [![](https://img.shields.io/badge/Support-Server-success?style=for-the-badge&logo=discord)](https://discord.gg/qMsVeFpxWX)
 [![](https://img.shields.io/badge/Invite-Arima-success?style=for-the-badge&logo=discord)](https://discord.com/api/oauth2/authorize?client_id=809547125397782528&permissions=3492928&scope=bot)
+[![](https://img.shields.io/badge/Website-success?style=for-the-badge)](https://arima.fun)
 
 </div align="center">
 

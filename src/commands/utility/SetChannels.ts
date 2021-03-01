@@ -15,7 +15,7 @@ interface Args {
   restrict: boolean;
 }
 
-@ApplyOptions<CommandOptions>('restrict-channels', {
+@ApplyOptions<CommandOptions>('set-channels', {
   aliases: ['restrict-channels', 'set-channels', 'whitelist-channels'],
   description: 'Set channels where you can use the bot',
   usage: '<list_of_channel_mentions [--restrict]>',
@@ -43,7 +43,7 @@ interface Args {
   ],
   userPermissions: ['MANAGE_GUILD'],
 })
-export default class RestrictChannelsCommand extends Command {
+export default class SetChannelsCommand extends Command {
   public async run(
     message: Message,
     { channels, restrict }: Args

@@ -4,7 +4,7 @@ import Command from '../../lib/structures/Command';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
 
 @ApplyOptions<CommandOptions>('suggest', {
-  aliases: ['suggest', 'report', 'support'],
+  aliases: ['suggest', 'report'],
   description: 'Suggest a feature',
 })
 export default class SuggestCommand extends Command {

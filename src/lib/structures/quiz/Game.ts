@@ -124,9 +124,7 @@ export default class Game {
             [52, 152, 219] as [number, number, number],
           ])
         )
-        .setAuthor(
-          `A new game has been started in #${this.text.name} (text) and #${this.voice.name} (voice)`
-        )
+        .setAuthor(`Hosted by ${this.host.user.tag}`)
         .setTitle(
           `The game has begun! Playing "${this.playlist.title}" by ${this.playlist.author}`
         )

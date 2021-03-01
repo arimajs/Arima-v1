@@ -30,7 +30,7 @@ export default class Command extends Listener {
               missing.length ? 'other ' : ''
             }issues or want to suggest a feature, please feel free to join my [support server](${
               process.env.SUPPORT_SERVER_INVITE
-            })`
+            }). Please use \`a!help\`, \`a!info\`, and [visit my docs website](https://arima.fun) for more info!`
           )
       )
       .catch(() => {});

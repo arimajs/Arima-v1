@@ -2,7 +2,7 @@ import type { CommandOptions } from '@arimajs/discord-akairo';
 import type { Message, EmbedFieldData } from 'discord.js-light';
 import { commaListsAnd } from 'common-tags';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
-import { EnhancedEmbed, Command } from '../../lib/structures';
+import { Command } from '../../lib/structures';
 
 interface Args {
   command?: Command;
@@ -20,111 +20,132 @@ interface Args {
     },
   ],
 })
-export default class CommandsCommand extends Command {
+export default class HelpCommand extends Command {
   public async run(message: Message, { command }: Args): Promise<unknown> {
     const prefix = await this.client.util.prefix(message.guild);
-    if (!command) {
-      const sent = await message.author.send(
-        message
-          .embed('All Arima Commands')
+    if (!command)
+      return message.embed("Hi, I'm Arima!", (embed) =>
+        embed
           .setDescription(
-            `If you want a more detailed look at any command, you can use \`${prefix}commands <command>\` or \`${prefix}<command> --help\`\n\nRemember that everything inside \`<>\` is required, everything inside \`[]\` is optional, and \`|\` means "or". Don't include these symbols in the actual command`
+            `If you want a more detailed look at any command, you can use \`${prefix}commands <command>\` (also check out my documentation linked below)`
           )
+          .addFields([
+            {
+              name: '❔ Info',
+              value: ['dashboard', 'donate', 'help', 'info', 'invite', 'ping']
+                .map(this.command.bind(this, prefix))
+                .join(' '),
+            },
+            {
+              name: '🎶 Music',
+              value: [
+                'add-song',
+                'add-songs',
+                'create-playlist',
+                'delete-playlist',
+                'delete-song',
+                'playlist-info',
+                'playlists',
+                'skip',
+                'song-info',
+                'start',
+                'stop',
+              ]
+                .map(this.command.bind(this, prefix))
+                .join(' '),
+            },
+            {
+              name: '🏆 Social',
+              value: ['leaderboard', 'value', 'rank'].map(
+                this.command.bind(this, prefix)
+              ),
+              inline: true,
+            },
+            {
+              name: '🤖 Utility',
+              value: ['prefix', 'quiz-channel', 'set-channels']
+                .map(this.command.bind(this, prefix))
+                .join(' '),
+              inline: true,
+            },
+            {
+              name: "Arima's Nexus",
+              value: `[Invite Me](https://discord.com/api/oauth2/authorize?client_id=${
+                this.client.user!.id
+              }&permissions=3492928&scope=bot) • [Support Server](${
+                process.env.SUPPORT_SERVER_INVITE
+              }) • [Documentation Website](https://arima.fun) • [Patreon](https://patreon.com/ArimaBot)`,
+            },
+          ])
+          .setThumbnail(this.client.user!.displayAvatarURL())
       );
-      await EnhancedEmbed.paginate(
-        sent,
-        [
-          message.embed('My Commands'),
-          ...this.handler.categories
-            .filter((category) => category.some((command) => !command.hidden))
-            .map((category) =>
-              message
-                .embed(`${this.client.util.upper(category.id)} Commands`)
-                .setColor('RANDOM')
-                .addFields(
-                  category
-                    .filter((command) => !command.hidden)
-                    .map((command) => ({
-                      name: this.client.util.upper(command.id),
-                      value: `\`${prefix}${command.id} ${
-                        command.usage || ''
-                      }\`\n${command.description}`,
-                      inline: true,
-                    }))
+    if (command.hidden) return message.error('This command is hidden 🙈');
+    void message.embed(`Help for \`${prefix}${command.id}\``, (embed) =>
+      embed
+        .addFields(
+          [
+            {
+              name: 'Category',
+              value: this.client.util.upper(command.categoryID),
+            },
+            command.aliases.length > 1 && {
+              name: 'Aliases',
+              value: commaListsAnd`${this.inline(command.aliases)}`,
+            },
+            Array.isArray(command.argDescriptions) && {
+              name: `Arguments: ${command.argDescriptions.length}`,
+              value: command.argDescriptions
+                .map(
+                  (arg) =>
+                    `> Descriptor: \`${arg.id}\`\n${this.exists(
+                      arg.type,
+                      `> Type: ${
+                        typeof arg.type === 'string' ? arg.type : 'custom'
+                      }\n`
+                    )}${this.exists(
+                      !['function', 'undefined'].includes(typeof arg.default),
+                      `> Default: ${arg.default}\n`
+                    )}${this.exists(
+                      arg.flag,
+                      commaListsAnd`> Flag Alias(es): ${this.inline(
+                        [arg.flag!].flat()
+                      )}\n`
+                    )}${this.exists(
+                      arg.description,
+                      `> Description: ${arg.description}\n`
+                    )}`
                 )
-            ),
-        ],
-        [message.author.id]
-      );
-    } else {
-      if (command.hidden) return message.error('This command is hidden 🙈');
-      await message.author.send(
-        message
-          .embed(`Help for \`${prefix}${command.id}\``)
-          .addFields(
-            [
-              {
-                name: 'Category',
-                value: this.client.util.upper(command.categoryID),
+                .join('\n'),
+            },
+            {
+              name: 'Usage',
+              value: `\`\`\`\n!${command.id} ${command.usage || ''}\n\`\`\``,
+            },
+            command.examples && {
+              name: 'Example(s)',
+              value: command.examples
+                .map((example) => `\`\`\`\n!${command.id} ${example}\n\`\`\``)
+                .join('\n'),
+            },
+            command.cooldown &&
+              command.cooldown !== 1000 && {
+                name: 'Cooldown',
+                value: `${command.ratelimit} every ${command.cooldown * 1000}s`,
               },
-              command.aliases.length > 1 && {
-                name: 'Aliases',
-                value: commaListsAnd`${this.inline(command.aliases)}`,
-              },
-              Array.isArray(command.argDescriptions) && {
-                name: `Arguments: ${command.argDescriptions.length}`,
-                value: command.argDescriptions
-                  .map(
-                    (arg) =>
-                      `> Descriptor: \`${arg.id}\`\n${this.exists(
-                        arg.type,
-                        `> Type: ${
-                          typeof arg.type === 'string' ? arg.type : 'custom'
-                        }\n`
-                      )}${this.exists(
-                        !['function', 'undefined'].includes(typeof arg.default),
-                        `> Default: ${arg.default}\n`
-                      )}${this.exists(
-                        arg.flag,
-                        commaListsAnd`> Flag Alias(es): ${this.inline(
-                          [arg.flag!].flat()
-                        )}\n`
-                      )}${this.exists(
-                        arg.description,
-                        `> Description: ${arg.description}\n`
-                      )}`
-                  )
-                  .join('\n'),
-              },
-              {
-                name: 'Usage',
-                value: `\`\`\`\n!${command.id} ${command.usage || ''}\n\`\`\``,
-              },
-              command.examples && {
-                name: 'Example(s)',
-                value: command.examples
-                  .map((example) => `\`\`\`\n!${command.id} ${example}\n\`\`\``)
-                  .join('\n'),
-              },
-              command.cooldown &&
-                command.cooldown !== 1000 && {
-                  name: 'Cooldown',
-                  value: `${command.ratelimit} every ${
-                    command.cooldown * 1000
-                  }s`,
-                },
-              Array.isArray(command.userPermissions) && {
-                name: 'Permission(s) Required',
-                value: commaListsAnd`${this.inline(
-                  command.userPermissions as string[]
-                )}`,
-              },
-            ].filter(Boolean) as EmbedFieldData[]
-          )
-          .setDescription(command.description || 'No description provided')
-      );
-    }
-    void message.react('👍');
+            Array.isArray(command.userPermissions) && {
+              name: 'Permission(s) Required',
+              value: commaListsAnd`${this.inline(
+                command.userPermissions as string[]
+              )}`,
+            },
+          ].filter(Boolean) as EmbedFieldData[]
+        )
+        .setDescription(command.description || 'No description provided')
+    );
+  }
+
+  private command(prefix: string, command: string) {
+    return `\`${prefix}${command}\``;
   }
 
   private inline(array: string[]) {
