@@ -10,7 +10,7 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 export default class Command extends Listener {
   public async exec(guild: Guild): Promise<void> {
     const owner = await this.client.users.fetch(guild.ownerID, false);
-    const missing = guild.me!.permissions.missing(11889728);
+    const missing = guild.me!.permissions.missing(3492928);
     owner
       .send(
         this.client.util
