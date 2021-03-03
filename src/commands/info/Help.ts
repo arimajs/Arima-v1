@@ -32,13 +32,18 @@ export default class HelpCommand extends Command {
           .addFields([
             {
               name: '❔ Info',
-              value: ['dashboard', 'donate', 'help', 'info', 'invite', 'ping']
-                .map(this.command.bind(this, prefix))
-                .join(' '),
+              value: this.inline([
+                'dashboard',
+                'donate',
+                'help',
+                'info',
+                'invite',
+                'ping',
+              ]).join(' '),
             },
             {
               name: '🎶 Music',
-              value: [
+              value: this.inline([
                 'add-song',
                 'add-songs',
                 'create-playlist',
@@ -50,22 +55,20 @@ export default class HelpCommand extends Command {
                 'song-info',
                 'start',
                 'stop',
-              ]
-                .map(this.command.bind(this, prefix))
-                .join(' '),
+              ]).join(' '),
             },
             {
               name: '🏆 Social',
-              value: ['leaderboard', 'value', 'rank'].map(
-                this.command.bind(this, prefix)
-              ),
+              value: this.inline(['leaderboard', 'value', 'rank']).join(' '),
               inline: true,
             },
             {
               name: '🤖 Utility',
-              value: ['prefix', 'quiz-channel', 'set-channels']
-                .map(this.command.bind(this, prefix))
-                .join(' '),
+              value: this.inline([
+                'prefix',
+                'quiz-channel',
+                'set-channels',
+              ]).join(' '),
               inline: true,
             },
             {
@@ -142,10 +145,6 @@ export default class HelpCommand extends Command {
         )
         .setDescription(command.description || 'No description provided')
     );
-  }
-
-  private command(prefix: string, command: string) {
-    return `\`${prefix}${command}\``;
   }
 
   private inline(array: string[]) {
