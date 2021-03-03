@@ -27,7 +27,7 @@ export default class HelpCommand extends Command {
       return message.embed("Hi, I'm Arima!", (embed) =>
         embed
           .setDescription(
-            `If you want a more detailed look at any command, you can use \`${prefix}commands <command>\` (also check out my documentation linked below)`
+            `If you want a more detailed look at any command, you can use \`${prefix}commands <command>\` (also check out my documentation linked below)\n\nTo start a game, simply type \`${prefix}start <spotify, soundcloud, or youtube link>\``
           )
           .addFields([
             {
