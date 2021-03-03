@@ -59,7 +59,7 @@ export default class HelpCommand extends Command {
             },
             {
               name: '🏆 Social',
-              value: this.inline(['leaderboard', 'value', 'rank']).join(' '),
+              value: this.inline(['leaderboard', 'level', 'rank']).join(' '),
               inline: true,
             },
             {
