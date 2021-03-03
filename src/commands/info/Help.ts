@@ -74,7 +74,7 @@ export default class HelpCommand extends Command {
                 this.client.user!.id
               }&permissions=3492928&scope=bot) • [Support Server](${
                 process.env.SUPPORT_SERVER_INVITE
-              }) • [Documentation Website](https://arima.fun) • [Patreon](https://patreon.com/ArimaBot)`,
+              }) • [Documentation Website](https://arima.fun) • [Github](https://github.com/arimajs/Arima) • [Patreon](https://patreon.com/ArimaBot)`,
             },
           ])
           .setThumbnail(this.client.user!.displayAvatarURL())
