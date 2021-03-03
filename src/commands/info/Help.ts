@@ -39,6 +39,7 @@ export default class HelpCommand extends Command {
                 'info',
                 'invite',
                 'ping',
+                'privacy',
               ]).join(' '),
             },
             {

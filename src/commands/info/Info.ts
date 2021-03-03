@@ -1,4 +1,4 @@
-import type { CommandOptions } from '@arimajs/discord-akairo';
+import type { CommandOptions, RegexSupplier } from '@arimajs/discord-akairo';
 import type { Message } from 'discord.js-light';
 import { getColor } from 'colorthief';
 import { formatDistanceToNowStrict } from 'date-fns';
@@ -10,9 +10,12 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 @ApplyOptions<CommandOptions>('info', {
   aliases: ['info', 'bot-info', 'arima', 'arima-info'],
   description: 'View my info',
+  regex: ((message) =>
+    new RegExp(`^\\s*<@!?${message.client.user!.id}>\\s*$`)) as RegexSupplier,
 })
 export default class InfoCommand extends Command {
   public async run(message: Message): Promise<void> {
+    const prefix = await this.client.util.prefix(message.guild);
     const avatar = this.client.user!.displayAvatarURL({ size: 4096 });
     const emote = User.getEmoji('legendary', message.channel);
     void message.channel.send(
@@ -28,9 +31,11 @@ export default class InfoCommand extends Command {
             .flat()
             .map(
               (id) => `<@${id}>`
-            )}. I will play 30 seconds snippets of songs from playlists **you** provide, and you'll try to guess them!\n\nTo view/change my prefix, use \`@Arima prefix\`. I've been online for **${formatDistanceToNowStrict(
+            )}. I will play 30 seconds snippets of songs from playlists **you** provide, and you'll try to guess them!\n\nTo view/change my prefix, use \`${prefix}prefix\`. I've been online for **${formatDistanceToNowStrict(
             Date.now() - this.client.uptime!
-          )}** and am currently playing **${this.client.games.size} games**!`
+          )}** and am currently playing **${
+            this.client.games.size
+          } games**! View my commands with \`${prefix}help\``
         )
         .addField(
           "Arima's Nexus",
