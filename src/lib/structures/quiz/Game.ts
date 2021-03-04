@@ -179,6 +179,7 @@ export default class Game {
         });
     } catch (err) {
       this.client.prom.metrics.errorCounter.inc();
+      Logger.error(`Connection error: ${err}`);
       void this.end('connection');
     }
   }

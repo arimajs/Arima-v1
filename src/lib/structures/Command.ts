@@ -27,9 +27,7 @@ export default abstract class ArimaCommand extends Command {
       game,
     } = options;
 
-    if (Array.isArray(clientPermissions)) {
-      (clientPermissions as string[]).push('SEND_MESSAGES', 'EMBED_LINKS');
-    }
+    (clientPermissions as string[]).push('SEND_MESSAGES', 'EMBED_LINKS');
 
     super(id, { ...options, args });
 
