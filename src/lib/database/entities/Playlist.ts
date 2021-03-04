@@ -67,13 +67,13 @@ export default class Playlist extends TimeStamps {
         tracks: available.map(({ track }) => ({
           title: track.name,
           thumbnail:
-            track.album?.images[0].url ??
+            track.album?.images[0]?.url ??
             'https://www.freepnglogos.com/uploads/spotify-logo-png/file-spotify-logo-png-4.png',
           author: track.artists[0].name,
           duration: track.duration_ms,
           url: track.external_urls.spotify,
           color: getColor(
-            track.album?.images[0].url ??
+            track.album?.images[0]?.url ??
               'https://www.freepnglogos.com/uploads/spotify-logo-png/file-spotify-logo-png-4.png'
           ).catch(() => [52, 152, 219] as [number, number, number]),
         })),
