@@ -57,13 +57,14 @@ export default class Playlist extends TimeStamps {
       if (!playlist.tracks.items.length) return 'NO_TRACKS';
 
       const thumbnail = playlist.images[0].url;
+      const available = playlist.tracks.items.filter(({ track }) => track);
 
       return {
         title: playlist.name,
         author: playlist.owner.display_name,
         url: playlist.external_urls.spotify,
         thumbnail,
-        tracks: playlist.tracks.items.map(({ track }) => ({
+        tracks: available.map(({ track }) => ({
           title: track.name,
           thumbnail:
             track.album?.images[0].url ??
@@ -76,7 +77,7 @@ export default class Playlist extends TimeStamps {
               'https://www.freepnglogos.com/uploads/spotify-logo-png/file-spotify-logo-png-4.png'
           ).catch(() => [52, 152, 219] as [number, number, number]),
         })),
-        track_count: playlist.tracks.items.length,
+        track_count: available.length,
         color: getColor(thumbnail).catch(() => [52, 152, 219]),
       };
     }
