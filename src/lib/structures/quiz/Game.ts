@@ -87,10 +87,10 @@ export default class Game {
     } = options;
 
     this.client = text.client as ArimaClient;
-    this.connection = connection.once('error', (err) => {
-      void this.end('connection');
-      Logger.error(`Connection error: ${err}`);
-    });
+    this.connection = connection.once(
+      'error',
+      this.handleConnectionError.bind(this)
+    );
 
     this.songGenerator = (function* (client: ArimaClient) {
       yield* client.util.shuffle(playlist.tracks);
@@ -164,23 +164,19 @@ export default class Game {
 
     try {
       this.stream = await Song.stream(song);
+      this.connection.dispatcher.removeAllListeners();
       this.connection
         .play(this.stream, {
           type: 'opus',
           volume: 0.5,
         })
-        .once('error', (err) => {
-          void this.end('connection');
-          Logger.error(`Connection error: ${err}`);
-        })
+        .once('error', this.handleConnectionError.bind(this))
         .once('start', () => {
           this.songsPlayed++;
           void this.listen();
         });
     } catch (err) {
-      this.client.prom.metrics.errorCounter.inc();
-      Logger.error(`Connection error: ${err}`);
-      void this.end('connection');
+      this.handleConnectionError(err);
     }
   }
 
@@ -410,5 +406,11 @@ export default class Game {
     );
     this.streaks.removeAll();
     void this.playNext();
+  }
+
+  private handleConnectionError(err: unknown) {
+    this.client.prom.metrics.errorCounter.inc();
+    Logger.error(`Connection error: ${err}`);
+    void this.end('connection');
   }
 }

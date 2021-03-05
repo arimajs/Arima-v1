@@ -40,7 +40,6 @@ export default class EnhancedEmbed extends MessageEmbed {
     );
 
     const paginate = (reaction: MessageReaction) => {
-      console.log('test');
       try {
         if (reaction.emoji.name === emojis[0])
           page = page ? page - 1 : pages.length - 1;
