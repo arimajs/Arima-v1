@@ -37,7 +37,7 @@ export default class PlaylistInfoCommand extends Command {
     const prefix = await this.client.util.prefix(message.guild);
 
     const chunks = this.client.util.chunk(playlist.tracks, 10);
-    void EnhancedEmbed.paginate(
+    EnhancedEmbed.paginate(
       message,
       chunks.map((songs, chunk) =>
         message

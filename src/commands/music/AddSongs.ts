@@ -100,7 +100,7 @@ export default class AddSongCommand extends Command {
       newPlaylist.color,
       [52, 152, 219] as [number, number, number],
     ]);
-    void message.embed(
+    message.embed(
       `All songs from "${newPlaylist.title}" by ${
         newPlaylist!.author
       } have been merged!`,
@@ -122,6 +122,6 @@ export default class AddSongCommand extends Command {
         }))
       ))
     );
-    void playlist.save();
+    playlist.save();
   }
 }

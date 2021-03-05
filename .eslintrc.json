@@ -26,7 +26,6 @@
     "func-names": "off",
     "no-console": "off",
     "no-bitwise": "off",
-    "no-void": "off",
     "no-plusplus": "off",
     "no-param-reassign": "off",
     "no-await-in-loop": "off",
@@ -37,6 +36,7 @@
     "@typescript-eslint/no-explicit-any": ["error", { "fixToUnknown": true }],
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-unnecessary-type-assertion": "off"
+    "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    "@typescript-eslint/no-floating-promises": "off"
   }
 }

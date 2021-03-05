@@ -18,6 +18,6 @@ export default class StopCommand extends Command {
         'Alternatively, the game will end if you kick me from the voice channel or everyone else leaves'
       );
 
-    void message.guild!.game!.end('end');
+    message.guild!.game!.end('end');
   }
 }

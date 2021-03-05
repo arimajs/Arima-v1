@@ -130,7 +130,7 @@ export default class StartCommand extends Command {
 
     if (!connection?.voice?.channelID) {
       if (message.guild!.me!.voice.channel)
-        void message.guild!.me!.voice.channel?.leave();
+        message.guild!.me!.voice.channel?.leave();
       return message.error('There was an error joining the voice channel');
     }
 
@@ -157,10 +157,10 @@ export default class StartCommand extends Command {
       );
 
     user.dailyGames++;
-    void user.save(); */
+    user.save(); */
 
     try {
-      void new Game({
+      new Game({
         playlist,
         text,
         voice,

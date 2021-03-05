@@ -40,17 +40,16 @@ export default class PromClient {
   }
 
   public createServer(): Server {
-    return createServer(
-      (req, res) =>
-        void (async () => {
-          if (req.url === '/metrics') {
-            res.writeHead(200, {
-              'Content-Type': this.metrics.register.contentType,
-            });
-            res.write(await this.metrics.register.metrics());
-          }
-          res.end();
-        })()
-    );
+    return createServer((req, res) => {
+      (async () => {
+        if (req.url === '/metrics') {
+          res.writeHead(200, {
+            'Content-Type': this.metrics.register.contentType,
+          });
+          res.write(await this.metrics.register.metrics());
+        }
+        res.end();
+      })();
+    });
   }
 }

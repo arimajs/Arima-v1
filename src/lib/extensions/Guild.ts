@@ -7,4 +7,4 @@ Structures.extend(
     class extends Guild {
       game?: Game;
     }
-);
+); // TODO this isn't needed

@@ -65,7 +65,7 @@ export default class PrefixCommand extends Command {
 
     try {
       await settings.save();
-      void message.embed(`Success!`, (embed) =>
+      message.embed(`Success!`, (embed) =>
         embed.setDescription(`My prefix has been changed to \`${prefix}\``)
       );
     } catch (e) {

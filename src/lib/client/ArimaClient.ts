@@ -128,7 +128,7 @@ export default class ArimaClient extends AkairoClient {
 
   public async start(): Promise<void> {
     await this.init();
-    void this.login(
+    this.login(
       process.env.NODE_ENV === 'production'
         ? process.env.PROD_TOKEN
         : process.env.DEV_TOKEN
@@ -191,7 +191,7 @@ export default class ArimaClient extends AkairoClient {
               )
               .setFooter('Please pick a playlist')
           );
-          void sent.reactAll(emotes);
+          sent.reactAll(emotes);
 
           const collected = await sent.awaitReactions(
             (reaction: MessageReaction, user: User) =>
@@ -240,7 +240,7 @@ export default class ArimaClient extends AkairoClient {
               )
               .setFooter('Please pick a song')
           );
-          void sent.reactAll(emotes);
+          sent.reactAll(emotes);
 
           const collected = await sent.awaitReactions(
             (reaction: MessageReaction, user: User) =>
@@ -260,7 +260,7 @@ export default class ArimaClient extends AkairoClient {
               numbers.findIndex((num) => num === collected.first()!.emoji.name)
             ]
           );
-          void sent.delete();
+          sent.delete();
         }
         return validate(updatedSong || song);
       },
@@ -288,7 +288,7 @@ export default class ArimaClient extends AkairoClient {
     /* scheduleJob(
       '0 0 * * *',
       () =>
-        void UserModel.updateMany(
+        UserModel.updateMany(
           { dailyGames: { $gt: 0 } },
           { $set: { dailyGames: 0 } },
           { multi: true }

@@ -67,7 +67,7 @@ export default class SetChannelsCommand extends Command {
 
     await settings.save();
 
-    void message.embed('Changes Saved', (embed) =>
+    message.embed('Changes Saved', (embed) =>
       embed.setDescription(
         commaListsAnd`${restrict ? 'Black' : 'White'}listed channels set to ${
           typeof channels === 'string'

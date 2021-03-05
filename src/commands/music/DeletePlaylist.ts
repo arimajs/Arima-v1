@@ -30,7 +30,7 @@ interface Args {
   clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
 })
 export default class DeletePlaylistCommand extends Command {
-  public async run(message: Message, { playlist }: Args): Promise<void> {
+  public async run(message: Message, { playlist }: Args): Promise<unknown> {
     const playlistEmbed = (title: string, description: string) =>
       message.embed(title, (embed) =>
         embed
@@ -52,10 +52,10 @@ export default class DeletePlaylistCommand extends Command {
     const confirm = await sent.poll(message.author.id);
     if (confirm) {
       await playlist.deleteOne();
-      return void playlistEmbed(`Deleted "${playlist.title}"`, '');
+      return playlistEmbed(`Deleted "${playlist.title}"`, '');
     }
 
-    void playlistEmbed(
+    playlistEmbed(
       `Ok, I won't delete "${playlist.title}"`,
       'Whew, that was a close one'
     );

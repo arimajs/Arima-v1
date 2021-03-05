@@ -9,7 +9,7 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 })
 export default class DashboardCommand extends Command {
   public run(message: Message): void {
-    void message.embed('Hey There!', (embed) =>
+    message.embed('Hey There!', (embed) =>
       embed.setDescription(
         `[Invite Me](https://discord.com/api/oauth2/authorize?client_id=${
           this.client.user!.id

@@ -70,7 +70,7 @@ interface Args {
 export default class SongInfoCommand extends Command {
   public run(message: Message, { playlist, index }: Args): void {
     const song = playlist.tracks[index - 1];
-    void message.embed(`"${song.title}" by ${song.author}`, (embed) =>
+    message.embed(`"${song.title}" by ${song.author}`, (embed) =>
       embed
         .setURL(song.url)
         .setColor(song.color as [number, number, number])

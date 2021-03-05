@@ -7,7 +7,10 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
   emitter: 'client',
 })
 export default class VoiceStateUpdateListener extends Listener {
-  public exec(oldState: VoiceState | null, newState: VoiceState | null): void {
+  public exec(
+    oldState: VoiceState | null,
+    newState: VoiceState | null
+  ): unknown {
     const {
       guild: { game },
       member,
@@ -20,14 +23,14 @@ export default class VoiceStateUpdateListener extends Listener {
       return;
 
     if (member.user.bot && !oldState)
-      return void game.players.set(
+      return game.players.set(
         member.id,
         Object.assign(member, { start: Date.now() })
       );
 
     if (!member.user.bot && !newState) {
-      if (member.id === game.host.id) return void game.end('host');
-      return void game.players.set(
+      if (member.id === game.host.id) return game.end('host');
+      return game.players.set(
         member.id,
         Object.assign(game.players.get(member.id), {
           end: Date.now(),
@@ -41,9 +44,8 @@ export default class VoiceStateUpdateListener extends Listener {
       (!newState && me) ||
       !game.voice.members.filter((member) => !member.user.bot).size
     )
-      return void game.end('end');
+      return game.end('end');
 
-    if (newState && !newState.deaf && me)
-      return void newState.setSelfDeaf(true);
+    if (newState && !newState.deaf && me) return newState.setSelfDeaf(true);
   }
 }

@@ -84,7 +84,7 @@ export default class HelpCommand extends Command {
           .setThumbnail(this.client.user!.displayAvatarURL())
       );
     if (command.hidden) return message.error('This command is hidden 🙈');
-    void message.embed(`Help for \`${prefix}${command.id}\``, (embed) =>
+    message.embed(`Help for \`${prefix}${command.id}\``, (embed) =>
       embed
         .addFields(
           [

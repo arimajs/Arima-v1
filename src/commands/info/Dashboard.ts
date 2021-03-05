@@ -9,6 +9,6 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 })
 export default class DashboardCommand extends Command {
   public run(message: Message): void {
-    void message.embed('Coming Soon!', true);
+    message.embed('Coming Soon!', true);
   }
 }

@@ -9,7 +9,7 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 })
 export default class DashboardCommand extends Command {
   public run(message: Message): void {
-    void message.embed('View Our Privacy Policy', (embed) =>
+    message.embed('View Our Privacy Policy', (embed) =>
       embed.setURL('https://arima.fun/privacy')
     );
   }

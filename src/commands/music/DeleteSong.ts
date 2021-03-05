@@ -72,7 +72,10 @@ interface Args {
   },
 })
 export default class DeleteSongCommand extends Command {
-  public async run(message: Message, { playlist, index }: Args): Promise<void> {
+  public async run(
+    message: Message,
+    { playlist, index }: Args
+  ): Promise<unknown> {
     const track = playlist.tracks[index - 1];
 
     const songEmbed = (title: string, description: string) =>
@@ -100,13 +103,13 @@ export default class DeleteSongCommand extends Command {
       playlist.track_count--;
       await playlist.save();
 
-      return void songEmbed(
+      return songEmbed(
         `Deleted "${track.title}" by ${track.author}`,
         `You now have ${playlist.tracks.length} songs on your playlist`
       );
     }
 
-    void songEmbed(
+    songEmbed(
       `Ok, I won't delete "${track.title}" by ${track.author}`,
       'Whew, that was a close one'
     );

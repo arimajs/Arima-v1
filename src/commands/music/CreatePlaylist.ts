@@ -71,7 +71,7 @@ export default class CreatePlaylistCommand extends Command {
       color: await getColor(thumbnail).catch(() => [52, 152, 219]),
     }).save();
 
-    void message.embed(`Saved Playlist "${playlist.title}"`, (embed) =>
+    message.embed(`Saved Playlist "${playlist.title}"`, (embed) =>
       embed
         .setColor(playlist.color as [number, number, number])
         .setThumbnail(playlist.thumbnail)

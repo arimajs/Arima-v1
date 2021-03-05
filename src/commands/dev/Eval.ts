@@ -41,7 +41,7 @@ export default class EvalCommand extends Command {
       ).replace(tokenRegex, '[TOKEN]');
 
       if (args.silent) {
-        void message.delete();
+        message.delete();
         return Logger.info('Eval results: ', output);
       }
 
@@ -55,7 +55,7 @@ export default class EvalCommand extends Command {
         output = 'Output too long...';
       }
 
-      void message.embed(`Eval Results`, (embed) =>
+      message.embed(`Eval Results`, (embed) =>
         embed.addFields([
           { name: '📥 Input', value: `${cb}js\n${args.code}\n${cb}` },
           { name: '📤 Output', value: `${cb}js\n${output}\n${cb}` },
@@ -63,7 +63,7 @@ export default class EvalCommand extends Command {
       );
     } catch (err) {
       if (args.silent) {
-        void message.delete();
+        message.delete();
         return Logger.info(`Eval error: ${err}`);
       }
 
@@ -75,7 +75,7 @@ export default class EvalCommand extends Command {
         err = 'Error too long...';
       }
 
-      void message.embed(`Eval Results`, (embed) =>
+      message.embed(`Eval Results`, (embed) =>
         embed
           .addFields([
             { name: '📥 Input', value: `${cb}js\n${args.code}\n${cb}` },

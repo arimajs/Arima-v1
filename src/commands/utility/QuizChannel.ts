@@ -39,7 +39,7 @@ export default class RestrictChannelsCommand extends Command {
     settings.quizChannel = channel === 'all' ? undefined : channel.id;
     await settings.save();
 
-    void message.embed('Changes Saved', (embed) =>
+    message.embed('Changes Saved', (embed) =>
       embed.setDescription(`Quiz channel set to ${channel}`)
     );
   }

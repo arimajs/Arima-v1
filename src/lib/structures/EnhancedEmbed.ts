@@ -45,9 +45,9 @@ export default class EnhancedEmbed extends MessageEmbed {
           page = page ? page - 1 : pages.length - 1;
         else page = page + 1 < pages.length ? page + 1 : 0;
 
-        void current.edit(new EnhancedEmbed(pages[page]).setFooter(footer()));
+        current.edit(new EnhancedEmbed(pages[page]).setFooter(footer()));
       } catch (err) {
-        void current.edit(
+        current.edit(
           message.embed("You're changing pages too fast!").setColor('RED')
         );
       }

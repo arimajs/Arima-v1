@@ -26,7 +26,7 @@ export default class PingCommand extends Command {
 
   public async run(message: Message, { leaderboard }: Args): Promise<void> {
     if (leaderboard)
-      void message.embed('Ping Leaderboard', (embed) =>
+      message.embed('Ping Leaderboard', (embed) =>
         embed
           .addFields(
             this.leaderboard

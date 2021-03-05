@@ -115,7 +115,7 @@ export default class Game {
 
   public async start(): Promise<void> {
     this.client.prom.metrics.matchStarted.inc();
-    void this.text.send(
+    this.text.send(
       this.client.util
         .embed()
         .setColor(
@@ -137,17 +137,17 @@ export default class Game {
         .setFooter(this.goal ? `Playing to ${this.goal} points` : '')
     );
 
-    void this.playNext();
+    this.playNext();
   }
 
   public async playNext(): Promise<void> {
     const song = this.songGenerator.next().value;
-    if (!song) return void this.end('limit');
+    if (!song) return this.end('limit');
 
     if (spotifySongRegex.test(song.url)) {
       const video = await ytsr.searchOne(`${song.author} - ${song.title}`);
       if (!video || video.duration < 3e4) {
-        void this.text.send(
+        this.text.send(
           this.client.util
             .embed()
             .setColor('RED')
@@ -173,7 +173,7 @@ export default class Game {
         .once('error', this.handleConnectionError.bind(this))
         .once('start', () => {
           this.songsPlayed++;
-          void this.listen();
+          this.listen();
         });
     } catch (err) {
       this.handleConnectionError(err);
@@ -211,33 +211,28 @@ export default class Game {
           }${this.goal ? `Playing to ${this.goal} points` : ''}`
         );
 
-    this.collector.once(
-      'collect',
-      (message: Message) =>
-        void (async () => {
-          this.current = undefined;
+    this.collector.once('collect', (message: Message) => {
+      (async () => {
+        this.current = undefined;
 
-          this.collector!.stop('collected');
-          this.leaderboard.inc(message.author.id);
-          this.streaks.addStreak(message.author.id);
+        this.collector!.stop('collected');
+        this.leaderboard.inc(message.author.id);
+        this.streaks.addStreak(message.author.id);
 
-          await this.text.send(
-            embed(message.author).personalize(message.author)
-          );
+        await this.text.send(embed(message.author).personalize(message.author));
 
-          if (this.goal === this.leaderboard.leader![1])
-            return this.end('goal');
+        if (this.goal === this.leaderboard.leader![1]) return this.end('goal');
 
-          void this.playNext();
-        })()
-    );
+        this.playNext();
+      })();
+    });
 
     this.collector.once('end', (collection, reason) => {
       if (reason !== 'time' || this.current?.url !== song.url || this.ended)
         return;
       this.streaks.removeAll();
-      void this.text.send(embed());
-      void this.playNext();
+      this.text.send(embed());
+      this.playNext();
     });
   }
 
@@ -394,7 +389,7 @@ export default class Game {
     if (this.ended) return;
     const song = this.current!;
     this.collector?.stop();
-    void this.text.send(
+    this.text.send(
       this.client.util
         .embed()
         .setTitle(`That was ${song.title} by ${song.author}`)
@@ -405,12 +400,12 @@ export default class Game {
         .setFooter(this.goal ? `Playing to ${this.goal} points` : '')
     );
     this.streaks.removeAll();
-    void this.playNext();
+    this.playNext();
   }
 
   private handleConnectionError(err: unknown) {
     this.client.prom.metrics.errorCounter.inc();
     Logger.error(`Connection error: ${err}`);
-    void this.end('connection');
+    this.end('connection');
   }
 }

@@ -18,7 +18,7 @@ export default class InfoCommand extends Command {
     const prefix = await this.client.util.prefix(message.guild);
     const avatar = this.client.user!.displayAvatarURL({ size: 4096 });
     const emote = User.getEmoji('legendary', message.channel);
-    void message.channel.send(
+    message.channel.send(
       this.client.util
         .embed()
         .personalize(this.client.user!)

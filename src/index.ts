@@ -7,20 +7,19 @@ import './lib/extensions';
 dotenv.config();
 const client = new ArimaClient();
 
-cleanup(
-  (exitCode, signal) =>
-    void (async () => {
-      Logger.info(
-        `Received cleanup request with ${exitCode ? `exit code` : `signal`} ${
-          signal || exitCode
-        }`
-      );
+cleanup((exitCode, signal) => {
+  (async () => {
+    Logger.info(
+      `Received cleanup request with ${exitCode ? `exit code` : `signal`} ${
+        signal || exitCode
+      }`
+    );
 
-      client.destroy();
-      await client.db.disconnect();
+    client.destroy();
+    await client.db.disconnect();
 
-      process.kill(process.pid, signal || undefined);
-    })()
-);
+    process.kill(process.pid, signal || undefined);
+  })();
+});
 
-void client.start();
+client.start();

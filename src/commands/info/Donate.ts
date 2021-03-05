@@ -9,7 +9,7 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 })
 export default class DashboardCommand extends Command {
   public run(message: Message): void {
-    void message.embed("Here's my Patreon!", (embed) =>
+    message.embed("Here's my Patreon!", (embed) =>
       embed
         .setURL('https://patreon.com/ArimaBot')
         .setDescription('Any donation would really help me out ^w^')

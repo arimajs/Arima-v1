@@ -44,7 +44,7 @@ export default class LevelCommand extends Command {
 
     const emoji = User.getEmoji(user.rank, message.channel);
     const members = await message.guild!.members.fetch(false);
-    void message.channel.send(
+    message.channel.send(
       this.client.util
         .embed()
         .personalize(member)

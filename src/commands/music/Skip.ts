@@ -26,7 +26,7 @@ export default class SkipCommand extends Command {
       true
     );
 
-    void sent.react('✅');
+    sent.react('✅');
     const collector = sent.createReactionCollector(
       (reaction: MessageReaction, user: User) =>
         members.keyArray().includes(user.id) && reaction.emoji.name === '✅',
@@ -37,8 +37,8 @@ export default class SkipCommand extends Command {
       collector.stop('nextSong')
     );
 
-    const update = (type: 'add' | 'remove') =>
-      void sent
+    const update = (type: 'add' | 'remove') => {
+      sent
         .edit(
           sent.embeds[0].setTitle(
             `Would you like to skip this song? (1/${
@@ -47,6 +47,7 @@ export default class SkipCommand extends Command {
           )
         )
         .catch(() => {});
+    };
 
     collector
       .on('collect', () => update('add'))

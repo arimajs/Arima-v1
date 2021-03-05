@@ -30,7 +30,7 @@ export default Structures.extend(
         if (send) {
           if (typeof send === 'function') send(embed);
           return new Promise((resolve) => {
-            void this.channel.send(embed).then(resolve);
+            this.channel.send(embed).then(resolve);
           });
         }
 
@@ -38,7 +38,7 @@ export default Structures.extend(
       }
 
       public error(message: string, explanation?: string): void {
-        void this.embed(`:x: ${message}`, (embed) => {
+        this.embed(`:x: ${message}`, (embed) => {
           embed.setColor('RED');
           if (explanation) embed.setDescription(explanation);
         });
@@ -65,14 +65,12 @@ export default Structures.extend(
             emojis.includes(reaction.emoji.name) && user.id === id,
           { max: 1, time: 3e4 }
         );
-        void this.delete();
+        this.delete();
         return !!(reactions.first()?.emoji.name === emojis[0]);
       }
 
       public attemptEdit(content: EnhancedEmbed) {
-        return void (this.deleted
-          ? this.channel.send(content)
-          : this.edit(content));
+        return this.deleted ? this.channel.send(content) : this.edit(content);
       }
     }
 );
