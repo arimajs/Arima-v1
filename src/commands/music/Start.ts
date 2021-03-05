@@ -4,11 +4,21 @@ import {
   Flag,
   PromptContentSupplier,
 } from '@arimajs/discord-akairo';
-import { Document } from 'mongoose';
+// import { Service } from '@arimajs/dbots';
 import type { Message, TextChannel, VoiceChannel } from 'discord.js';
+// import { AxiosResponse } from '@arimajs/dbots/lib/Utils/FormatRequest';
 import type Playlist from '../../lib/database/entities/Playlist';
+// import { User } from '../../lib/database';
+// import { User as UserDoc } from '../../lib/database/entities';
 import { Command, Game } from '../../lib/structures';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
+
+/* interface TopGG extends Service {
+  userVoted(
+    id: string,
+    userID: string
+  ): Promise<AxiosResponse<{ voted: 0 | 1 }>>;
+} */
 
 interface Args {
   playlist: Playlist;
@@ -125,10 +135,28 @@ export default class StartCommand extends Command {
 
     await message.guild!.me!.voice.setSelfDeaf(true);
 
-    const [text, voice] = (await Promise.all([
-      this.client.channels.fetch(message.channel.id, false),
-      this.client.channels.fetch(connection.voice.channelID, false),
-    ])) as [TextChannel, VoiceChannel];
+    const [text, voice /* , user */] = (await Promise.all([
+      this.client.channels.fetch(message.channel.id, false) as unknown,
+      this.client.channels.fetch(connection.voice.channelID, false) as unknown,
+      /* (await User.findOne({ id: message.author.id })) ||
+        new User({ id: message.author.id, dailyGames: 0 }), */
+    ])) as [TextChannel, VoiceChannel /* , UserDoc */];
+
+    /* const { voted } = (
+      await (this.client.poster.getService('topgg') as TopGG).userVoted(
+        this.client.user!.id,
+        message.author.id
+      )
+    ).data;
+
+    if (user.dailyGames === 3 && !voted)
+      return message.error(
+        "You've already reached the max 3 games per day",
+        "If you'd like to play more, please vote for Arima [here](https://top.gg/bot/809547125397782528), and the restriction will be lifted"
+      );
+
+    user.dailyGames++;
+    void user.save(); */
 
     try {
       void new Game({

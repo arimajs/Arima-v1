@@ -4,6 +4,7 @@ import type {
   InhibitorHandler,
   ArgumentOptions,
 } from '@arimajs/discord-akairo';
+import type { Poster } from '@arimajs/dbots';
 import type {
   Collection,
   Snowflake,
@@ -20,6 +21,7 @@ declare module '@arimajs/discord-akairo' {
     db: Database;
     player: Player;
     prom: PromClient;
+    poster: Poster;
     commandHandler: CommandHandler;
     listenerHandler: ListenerHandler;
     inhibitorHandler: InhibitorHandler;

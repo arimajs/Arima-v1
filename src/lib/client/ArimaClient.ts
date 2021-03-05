@@ -6,10 +6,12 @@ import {
   ListenerHandler,
   Flag,
 } from '@arimajs/discord-akairo';
+import { Poster } from '@arimajs/dbots';
 import { Collection, Message, MessageReaction, User } from 'discord.js-light';
 import { Client } from 'soundcloud-scraper';
+// import { scheduleJob } from 'node-schedule';
 import { ArimaUtil, Logger, PromClient } from '../utils';
-import { Database, Guild } from '../database';
+import { Database, Guild /* , User as UserModel */ } from '../database';
 import { Playlist, Song } from '../database/entities';
 import { Game } from '../structures';
 
@@ -21,6 +23,8 @@ export default class ArimaClient extends AkairoClient {
   public soundcloud = new Client();
 
   public prom = new PromClient();
+
+  public poster!: Poster;
 
   public commandHandler: CommandHandler = new CommandHandler(this, {
     directory: join(__dirname, '../../commands'),
@@ -280,5 +284,15 @@ export default class ArimaClient extends AkairoClient {
     Logger.info(
       `Created Prometheus server at http://localhost:${process.env.PORT}/metrics`
     );
+
+    /* scheduleJob(
+      '0 0 * * *',
+      () =>
+        void UserModel.updateMany(
+          { dailyGames: { $gt: 0 } },
+          { $set: { dailyGames: 0 } },
+          { multi: true }
+        )
+    ); */
   }
 }

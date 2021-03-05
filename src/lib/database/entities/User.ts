@@ -42,6 +42,9 @@ export default class User extends Entity {
   @prop({ default: false })
   premium!: boolean;
 
+  /* @prop({ default: 0 })
+  dailyGames!: number; */
+
   public static getEmoji<T extends keyof typeof ranks>(
     rank: T,
     channel: TextBasedChannel
