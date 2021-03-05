@@ -5,6 +5,7 @@ import {
   PromptContentSupplier,
 } from '@arimajs/discord-akairo';
 // import { Service } from '@arimajs/dbots';
+import { Document } from 'mongoose';
 import type { Message, TextChannel, VoiceChannel } from 'discord.js';
 // import { AxiosResponse } from '@arimajs/dbots/lib/Utils/FormatRequest';
 import type Playlist from '../../lib/database/entities/Playlist';
