@@ -69,6 +69,8 @@ export default class HelpCommand extends Command {
                 'prefix',
                 'quiz-channel',
                 'set-channels',
+                'suggest',
+                'vote',
               ]).join(' '),
               inline: true,
             },
