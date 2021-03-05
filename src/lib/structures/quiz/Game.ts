@@ -164,7 +164,6 @@ export default class Game {
 
     try {
       this.stream = await Song.stream(song);
-      this.connection.dispatcher.removeAllListeners();
       this.connection
         .play(this.stream, {
           type: 'opus',
