@@ -22,6 +22,7 @@ export default class ReadyListener extends Listener {
         botsdatabase: process.env.BOTS_DATABASE_BOT_LIST_TOKEN!,
         botsfordiscord: process.env.BOTS_FOR_DISCORD_BOT_LIST_TOKEN!,
         discordboats: process.env.DISCORD_BOATS_BOT_LIST_TOKEN!,
+        discordbotlist: process.env.DISCORD_BOT_LIST_TOKEN!,
         discordbotdirectory: process.env.DISCORD_BOT_DIRECTORY_BOT_LIST_TOKEN!,
         discordbotsgg: process.env.DISCORD_BOTS_GG_BOT_LIST_TOKEN!,
         discordextremelist: process.env.DISCORD_EXTREME_LIST_BOT_LIST_TOKEN!,
@@ -37,6 +38,10 @@ export default class ReadyListener extends Listener {
     });
 
     if (process.env.NODE_ENV === 'production') {
+      this.client.poster.addHandler(
+        'autopostFail',
+        Logger.error.bind(null, `Bot list posting error: `)
+      );
       this.client.poster.startInterval();
 
       this.client.prom.metrics.serversJoined.set(
