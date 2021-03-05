@@ -38,9 +38,8 @@ export default class ReadyListener extends Listener {
     });
 
     if (process.env.NODE_ENV === 'production') {
-      this.client.poster.addHandler(
-        'autopostFail',
-        Logger.error.bind(null, `Bot list posting error: `)
+      this.client.poster.addHandler('autopostFail', (err) =>
+        Logger.error(`Bot list posting error: `, err)
       );
       this.client.poster.startInterval();
 
