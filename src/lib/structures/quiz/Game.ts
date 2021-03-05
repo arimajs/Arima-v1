@@ -87,10 +87,7 @@ export default class Game {
     } = options;
 
     this.client = text.client as ArimaClient;
-    this.connection = connection.once(
-      'error',
-      this.handleConnectionError.bind(this)
-    );
+    this.connection = connection;
 
     this.songGenerator = (function* (client: ArimaClient) {
       yield* client.util.shuffle(playlist.tracks);
@@ -164,7 +161,9 @@ export default class Game {
 
     try {
       this.stream = await Song.stream(song);
+      this.connection.removeAllListeners();
       this.connection
+        .once('error', this.handleConnectionError.bind(this))
         .play(this.stream, {
           type: 'opus',
           volume: 0.5,
