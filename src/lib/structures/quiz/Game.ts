@@ -404,7 +404,7 @@ export default class Game {
 
   private handleConnectionError(err: unknown) {
     this.client.prom.metrics.errorCounter.inc();
-    Logger.error(`Connection error: ${err}`);
+    Logger.error(`Connection error: `, err);
     this.end('connection');
   }
 }

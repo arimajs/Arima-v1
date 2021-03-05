@@ -64,13 +64,13 @@ export default class EvalCommand extends Command {
     } catch (err) {
       if (args.silent) {
         message.delete();
-        return Logger.info(`Eval error: ${err}`);
+        return Logger.info(`Eval error: `, err);
       }
 
       if (args.code.length > 1014) args.code = 'Input too long...';
 
       if (`${err}`.length > 1014) {
-        Logger.info(`Eval error too long; sending in console instead: ${err}`);
+        Logger.info(`Eval error too long; sending in console instead: `, err);
         // eslint-disable-next-line no-ex-assign
         err = 'Error too long...';
       }
