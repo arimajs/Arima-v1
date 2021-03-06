@@ -160,8 +160,10 @@ export default class Game {
     this.current = song;
 
     try {
+      this.stream?.destroy();
       this.stream = await Song.stream(song);
       this.connection.removeAllListeners();
+      this.connection.dispatcher.end();
       this.connection
         .once('error', this.handleConnectionError.bind(this))
         .play(this.stream, {
@@ -273,8 +275,12 @@ export default class Game {
     this.client.games.delete(this.guild.id);
     this.ended = true;
     this.guild.game = undefined;
-    this.connection.disconnect();
+    this.connection?.dispatcher.removeAllListeners();
+    this.connection?.dispatcher.end();
+    this.connection?.removeAllListeners();
+    this.connection?.disconnect();
     this.stream?.destroy();
+    this.collector?.removeAllListeners();
     this.collector?.stop('force');
 
     if (!this.guild.me) return;
