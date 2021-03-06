@@ -163,7 +163,7 @@ export default class Game {
       this.stream?.destroy();
       this.stream = await Song.stream(song);
       this.connection.removeAllListeners();
-      this.connection.dispatcher.end();
+      this.connection.dispatcher?.end();
       this.connection
         .once('error', this.handleConnectionError.bind(this))
         .play(this.stream, {
@@ -276,7 +276,7 @@ export default class Game {
     this.ended = true;
     this.guild.game = undefined;
     this.connection?.dispatcher.removeAllListeners();
-    this.connection?.dispatcher.end();
+    this.connection?.dispatcher?.end();
     this.connection?.removeAllListeners();
     this.connection?.disconnect();
     this.stream?.destroy();
