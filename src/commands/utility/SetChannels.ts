@@ -67,16 +67,14 @@ export default class SetChannelsCommand extends Command {
 
     await settings.save();
 
-    message.embed(
-      'Changes Saved',
-      (embed) =>
-        embed.setDescription(
-          commaListsAnd`${restrict ? 'Black' : 'White'}listed channels set to ${
-            typeof channels === 'string'
-              ? 'all'
-              : channels.map(({ id }) => `<#${id}>`)
-          }`
-        ) // TODO RangeError [EMBED_FIELD_VALUE]: MessageEmbed field values may not be empty.
+    message.embed('Changes Saved', (embed) =>
+      embed.setDescription(
+        commaListsAnd`${restrict ? 'Black' : 'White'}listed channels set to ${
+          typeof channels === 'string'
+            ? 'all'
+            : channels.map(({ id }) => `<#${id}>`)
+        }`
+      )
     );
   }
 }

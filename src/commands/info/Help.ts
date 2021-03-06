@@ -144,7 +144,9 @@ export default class HelpCommand extends Command {
                 command.userPermissions as string[]
               )}`,
             },
-          ].filter(Boolean) as EmbedFieldData[]
+          ].filter(
+            (field) => field && field.value && field.name
+          ) as EmbedFieldData[]
         )
         .setDescription(command.description || 'No description provided')
     );
