@@ -8,6 +8,5 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 export default class Command extends Listener {
   public exec(): void {
     this.client.prom.metrics.serversJoined.dec();
-    // TODO update top.gg listing
   }
 }

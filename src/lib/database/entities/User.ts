@@ -19,7 +19,6 @@ const emojis = {
   legendary: '<a:legendary:808115638240411689>',
 };
 
-// TODO "gamesPlayed" "hasVoted" props on User (no more than 3 games w/o voting) maybe use BLWebhooks? Maybe don't have to vote if patron/booster?
 export default class User extends Entity {
   @prop({ default: 0 })
   matchesWon!: number;
