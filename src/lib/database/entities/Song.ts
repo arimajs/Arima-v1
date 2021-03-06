@@ -50,7 +50,7 @@ export default class Song {
       : ytdl(song.url, {
           requestOptions: {
             headers: {
-              cookie: process.env.COOKIE,
+              cookie: process.env.YOUTUBE_COOKIE,
               'x-youtube-identity-token': process.env.YOUTUBE_ID_TOKEN,
             },
           },
