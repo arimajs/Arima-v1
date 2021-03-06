@@ -113,15 +113,19 @@ export default class StartCommand extends Command {
     if (!message.member!.voice.channelID)
       return message.error("You're not in a voice channel");
 
-    if (!message.member!.voice.channel!.joinable)
+    const voice = (await message
+      .member!.voice.channel!.fetch(false)
+      .catch(() => null)) as VoiceChannel | null;
+
+    if (!voice || !voice.joinable)
       return message.error(
         "I can't join this voice channel",
         "This could be because I don't have permissions to see/connect to the channel, or the channel is full"
       );
 
-    if (!message.member!.voice.channel!.speakable)
+    if (!voice.speakable)
       return message.error(
-        "I don't have the permissions to speak in that channel"
+        "I don't have the permissions to speak in this channel"
       );
 
     const connection = await message
@@ -136,21 +140,19 @@ export default class StartCommand extends Command {
 
     await message.guild!.me!.voice.setSelfDeaf(true);
 
-    const [text, voice /* , user */] = (await Promise.all([
+    const [text /* , user, { data: { voted }} */] = (await Promise.all([
       this.client.channels.fetch(message.channel.id, false) as unknown,
-      this.client.channels.fetch(connection.voice.channelID, false) as unknown,
-      /* (await User.findOne({ id: message.author.id })) ||
-        new User({ id: message.author.id, dailyGames: 0 }), */
-    ])) as [TextChannel, VoiceChannel /* , UserDoc */];
-
-    /* const { voted } = (
-      await (this.client.poster.getService('topgg') as TopGG).userVoted(
+      /* User.findOne({ id: message.author.id }) ||
+        new User({ id: message.author.id, dailyGames: 0 }),
+      (this.client.poster.getService('topgg') as TopGG).userVoted(
         this.client.user!.id,
         message.author.id
-      )
-    ).data;
+      ), */
+    ])) as [
+      TextChannel /* , UserDoc, Promise<AxiosResponse<{ voted: 0 | 1 }>> */
+    ];
 
-    if (user.dailyGames === 3 && !voted)
+    /* if (user.dailyGames === 3 && !voted)
       return message.error(
         "You've already reached the max 3 games per day",
         "If you'd like to play more, please vote for Arima [here](https://top.gg/bot/809547125397782528), and the restriction will be lifted"
