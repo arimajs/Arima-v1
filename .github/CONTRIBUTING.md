@@ -20,9 +20,7 @@ To get ready to work on the codebase, please do the following:
 
 1. Fork & clone the repository, and make sure you're on the **main** branch
 2. Run `yarn`
-3. Fill out [`.env.example`](../.env.example) (you can find your soundcloud api
-   key [here](https://runkit.com/lioness100/602153c28cacf5001ae3c7e7) and rename
-   it to [`.env`](../.env)
+3. Fill out [`.env.example`](../.env.example) and rename it to [`.env`](../.env)
 4. Code your heart out!
 
 ### Starting Arima

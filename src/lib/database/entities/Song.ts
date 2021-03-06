@@ -48,6 +48,12 @@ export default class Song {
           }
         )
       : ytdl(song.url, {
+          requestOptions: {
+            headers: {
+              cookie: process.env.COOKIE,
+              'x-youtube-identity-token': process.env.YOUTUBE_ID_TOKEN,
+            },
+          },
           quality: 'highestaudio',
           filter: 'audioonly',
           opusEncoded: true,
@@ -61,7 +67,14 @@ export default class Song {
     client: ArimaClient
   ): Promise<Song | Video[] | 'LIVE_VIDEO' | 'NO_RESULTS'> {
     if (ytsr.validate(query, 'VIDEO') || ytsr.validate(query, 'VIDEO_ID')) {
-      const { videoDetails: video } = await ytdl.getBasicInfo(query);
+      const { videoDetails: video } = await ytdl.getBasicInfo(query, {
+        requestOptions: {
+          headers: {
+            cookie: process.env.COOKIE,
+            'x-youtube-identity-token': process.env.YOUTUBE_ID_TOKEN,
+          },
+        },
+      });
       if (video.isLiveContent) return 'LIVE_VIDEO';
 
       const thumbnail = video.thumbnails[video.thumbnails.length - 1].url;
