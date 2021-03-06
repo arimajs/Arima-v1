@@ -30,12 +30,13 @@ export default class VoiceStateUpdateListener extends Listener {
 
     if (!member.user.bot && !newState) {
       if (member.id === game.host.id) return game.end('host');
-      return game.players.set(
-        member.id,
-        Object.assign(game.players.get(member.id), {
-          end: Date.now(),
-        })
-      );
+      if (game.players.has(member.id))
+        return game.players.set(
+          member.id,
+          Object.assign(game.players.get(member.id), {
+            end: Date.now(),
+          })
+        );
     }
 
     const me = member.id === this.client.user!.id;
