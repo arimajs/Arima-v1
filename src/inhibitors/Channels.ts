@@ -7,7 +7,8 @@ import ApplyOptions from '../lib/utils/ApplyOptions';
 @ApplyOptions<InhibitorOptions>('channels', { reason: 'channel' })
 export default class ChannelsInhibitor extends Inhibitor {
   public async exec(message: Message, command: Command): Promise<boolean> {
-    if (!message.guild) return false;
+    if (!message.guild || message.member!.hasPermission('MANAGE_GUILD'))
+      return false;
     const guild = await Guild.findOne({ id: message.guild.id })
       .select('quizChannel allowedChannels')
       .lean();
