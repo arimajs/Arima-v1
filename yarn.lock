@@ -11,7 +11,7 @@
 
 "@arimajs/discord-akairo@arimajs/discord-akairo#light":
   version "8.1.0"
-  resolved "https://codeload.github.com/arimajs/discord-akairo/tar.gz/300af4ff033f89ea883b2e8f1f8dcea1214438a7"
+  resolved "https://codeload.github.com/arimajs/discord-akairo/tar.gz/ee452bb277a0c405968e7977c0c270f55c77a284"
   dependencies:
     bufferutil "^4.0.3"
     discord.js-light "^3.5.3"
@@ -3868,10 +3868,15 @@ ws@^6.0.0:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.0.0, ws@^7.3.1:
+ws@^7.0.0:
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.3.tgz#1f9643de34a543b8edb124bdcbc457ae55a6e5cd"
   integrity sha512-hr6vCR76GsossIRsr8OLR9acVVm1jyfEWvhbNjtgPOrfvAlKzvyeg/P6r8RuDjRyrcQoPQT7K0DGEPc7Ae6jzA==
+
+ws@^7.3.1:
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.4.tgz#383bc9742cb202292c9077ceab6f6047b17f2d59"
+  integrity sha512-Qm8k8ojNQIMx7S+Zp8u/uHOx7Qazv3Yv4q68MiWWWOJhiwG5W3x7iqmRtJo8xxrciZUY4vRxUTJCKuRnF28ZZw==
 
 ws@~7.2.0:
   version "7.2.5"

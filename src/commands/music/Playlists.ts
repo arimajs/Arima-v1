@@ -11,7 +11,7 @@ import ApplyOptions from '../../lib/utils/ApplyOptions';
 export default class PlaylistsCommand extends Command {
   public async run(message: Message): Promise<void> {
     const playlists = await Playlist.find({
-      id: message.author.id,
+      collaborators: message.author.id,
     })
       .select('title track_count')
       .lean();

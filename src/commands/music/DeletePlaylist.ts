@@ -31,6 +31,9 @@ interface Args {
 })
 export default class DeletePlaylistCommand extends Command {
   public async run(message: Message, { playlist }: Args): Promise<unknown> {
+    if (message.author.id !== playlist.id)
+      return message.error("You don't own this playlist");
+
     const playlistEmbed = (title: string, description: string) =>
       message.embed(title, (embed) =>
         embed

@@ -45,9 +45,11 @@ export default class HelpCommand extends Command {
             {
               name: '🎶 Music',
               value: this.inline([
+                'add-collaborators',
                 'add-song',
                 'add-songs',
                 'create-playlist',
+                'delete-collaborators',
                 'delete-playlist',
                 'delete-song',
                 'playlist-info',

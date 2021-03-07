@@ -2,6 +2,7 @@ import type { CommandOptions } from '@arimajs/discord-akairo';
 import type { Message } from 'discord.js-light';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { DocumentType } from '@typegoose/typegoose';
+import { commaListsAnd } from 'common-tags';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
 import type Playlist from '../../lib/database/entities/Playlist';
 import { EnhancedEmbed, Command } from '../../lib/structures';
@@ -35,7 +36,9 @@ export default class PlaylistInfoCommand extends Command {
       return message.error("There's no songs on this playlist");
 
     const prefix = await this.client.util.prefix(message.guild);
-
+    const collaborators = commaListsAnd`${playlist.collaborators!.map(
+      (collaborator) => `<@${collaborator}>`
+    )}`;
     const chunks = this.client.util.chunk(playlist.tracks, 10);
     EnhancedEmbed.paginate(
       message,
@@ -76,6 +79,13 @@ export default class PlaylistInfoCommand extends Command {
                 ? `${formatDistanceToNowStrict(playlist.updatedAt)} ago`
                 : 'Unknown',
               inline: true,
+            },
+            {
+              name: 'Collaborators',
+              value:
+                collaborators.length > 2048
+                  ? `There are ${playlist.collaborators!.length} collaborators`
+                  : collaborators,
             },
           ])
           .setFooter(`Use \`${prefix}song-info <index>\` to view a song's info`)

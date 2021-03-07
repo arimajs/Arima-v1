@@ -46,13 +46,15 @@ export default class CreatePlaylistCommand extends Command {
       );
 
     const playlists = await Playlist.find({
-      id: message.author.id,
+      $or: [{ id: message.author.id }, { collaborators: message.author.id }],
     })
       .select('title')
       .lean();
 
     if (playlists.some(({ title }) => title === name))
-      return message.error('You already have a playlist by that name');
+      return message.error(
+        'You already have a playlist or are collaborating with a playlist by that name'
+      );
 
     // TODO: You can only have x playlists unless you support on patreon
     if (playlists.length >= 3)
@@ -67,6 +69,7 @@ export default class CreatePlaylistCommand extends Command {
       id: message.author.id,
       title: name,
       author: message.author.tag,
+      collaborators: [message.author.id],
       thumbnail,
       color: await getColor(thumbnail).catch(() => [52, 152, 219]),
     }).save();

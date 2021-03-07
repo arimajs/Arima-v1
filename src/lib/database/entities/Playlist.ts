@@ -22,12 +22,15 @@ export default class Playlist extends TimeStamps {
   @prop()
   author!: string;
 
+  @prop({ type: () => [String], required: true })
+  collaborators?: Snowflake[];
+
   url?: URL;
 
   @prop()
   thumbnail!: URL;
 
-  @prop({ type: Song, default: [], _id: false })
+  @prop({ type: () => Song, default: [], _id: false })
   tracks!: Song[];
 
   @prop({ default: 0 })
@@ -149,7 +152,7 @@ export default class Playlist extends TimeStamps {
 
     if (id) {
       const playlist = await PlaylistDoc.findOne({
-        id,
+        collaborators: id,
         title: {
           $regex: new RegExp(`^${client.util.escapeRegex(query)}$`, 'i'),
         },
