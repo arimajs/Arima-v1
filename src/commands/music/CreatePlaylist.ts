@@ -46,7 +46,7 @@ export default class CreatePlaylistCommand extends Command {
       );
 
     const playlists = await Playlist.find({
-      $or: [{ id: message.author.id }, { collaborators: message.author.id }],
+      collaborators: message.author.id,
     })
       .select('title')
       .lean();
