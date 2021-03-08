@@ -79,7 +79,8 @@ interface Args {
     // TODO annoy computer1 until this is fixed
     // TODO a!rename-playlist and maybe other settings?
     // TODO statcord instead of prom-client
-    // TODO create comments branch
+    // TODO Logger => Proxy
+    // TODO DBots list
     /* const name = yield {
       type: Argument.validate(
         'string',

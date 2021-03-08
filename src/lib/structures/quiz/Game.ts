@@ -21,6 +21,8 @@ import { User as UserDoc } from '../../database';
 import { Leaderboard, StreakCounter } from '..';
 import { spotifySongRegex } from '../../utils/Constants';
 
+// points will be calculated partially based on how long a user has been
+// playing, so these properties are very helpful
 export interface Player extends GuildMember {
   start: number;
   end?: number;
@@ -89,6 +91,7 @@ export default class Game {
     this.client = text.client as ArimaClient;
     this.connection = connection;
 
+    // non-repeating random song selection
     this.songGenerator = (function* (client: ArimaClient) {
       yield* client.util.shuffle(playlist.tracks);
     })(this.client);
@@ -160,6 +163,9 @@ export default class Game {
     this.current = song;
 
     try {
+      // I don't really get the difference between `destroy()`, `close()`, and
+      // `end()`, but whenever I use them it's because I want to try to save
+      // memory by destroying/closing/ending stuff once I'm done with them
       this.stream?.destroy();
       this.stream = await Song.stream(song);
       this.connection.removeAllListeners();
@@ -203,7 +209,7 @@ export default class Game {
         .setColor(this.client.util.isBlue(color, 'RED'))
         .setFooter(
           `${
-            (this.streaks.leader?.[1] ?? 0) > 2
+            (this.streaks.leader?.[1] ?? 0) > 2 // if someone has a streak > 2
               ? `${guesser!.tag} has a streak of ${this.streaks.leader![1]} 🔥${
                   this.goal ? ' • ' : ''
                 }`
@@ -240,10 +246,13 @@ export default class Game {
     const validateSong = () =>
       [
         compareTwoStrings(
+          // Blank Space - Taylor Swift => Blank Space Blank Space (2001
+          // Remaster) => Blank Space
           this.current?.title.replace(/ \(.*| - .*/g, '').toLowerCase() ?? '',
           answer.toLowerCase()
         ),
         compareTwoStrings(
+          // Taylor Swift - Blank Space => Blank Space
           this.current?.title.replace(/.* -/g, '').toLowerCase() ?? '',
           answer.toLowerCase()
         ),
@@ -272,6 +281,7 @@ export default class Game {
   public async end(
     reason: 'limit' | 'end' | 'goal' | 'host' | 'connection'
   ): Promise<void> {
+    // ---- spaghetti ----
     this.client.games.delete(this.guild.id);
     this.ended = true;
     this.guild.game = undefined;
@@ -282,7 +292,9 @@ export default class Game {
     this.stream?.destroy();
     this.collector?.removeAllListeners();
     this.collector?.stop('force');
+    // ----           ----
 
+    // if I was kicked from the server >'(
     if (!this.guild.me) return;
     if (this.voice.members.has(this.client.user!.id)) this.voice.leave();
 
@@ -347,6 +359,7 @@ export default class Game {
     if (this.songsPlayed) {
       await Promise.all(
         this.players.map(async (member) => {
+          // (songs_guessed_correctly / songs_played) / minutes_played
           const xp = Math.round(
             ((this.leaderboard.get(member.id) || 0) / this.songsPlayed) *
               differenceInMinutes(member.end || Date.now(), member.start) *

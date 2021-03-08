@@ -107,6 +107,9 @@ export default class ArimaClient extends AkairoClient {
         },
         cacheRoles: true,
         cacheOverwrites: true,
+
+        // only events that are under intents listed above to prevent unwanted
+        // stuff
         disabledEvents: [
           'GUILD_ROLE_CREATE',
           'GUILD_ROLE_DELETE',
@@ -207,15 +210,10 @@ export default class ArimaClient extends AkairoClient {
             return Flag.cancel();
           }
           updatedPlaylist = Playlist.mapYoutubePlaylist(
-            this.util.tap(
-              playlist[
-                this.util.tap(
-                  numbers.findIndex(
-                    (num) => num === collected.first()!.emoji.name
-                  )
-                )
-              ]
-            )
+            // get playlist corresponding to reaction
+            playlist[
+              numbers.findIndex((num) => num === collected.first()!.emoji.name)
+            ]
           );
         }
         return validate(updatedPlaylist || playlist);
@@ -256,6 +254,7 @@ export default class ArimaClient extends AkairoClient {
             return Flag.cancel();
           }
           updatedSong = Song.mapYoutubeVideo(
+            // get song corresponding to reaction
             song[
               numbers.findIndex((num) => num === collected.first()!.emoji.name)
             ]
@@ -285,13 +284,11 @@ export default class ArimaClient extends AkairoClient {
       `Created Prometheus server at http://localhost:${process.env.PORT}/metrics`
     );
 
-    /* scheduleJob(
-      '0 0 * * *',
+    // TODO when Arima is accepted on top.gg
+    /* scheduleJob('0 0 * * *',
       () =>
-        UserModel.updateMany(
-          { dailyGames: { $gt: 0 } },
-          { $set: { dailyGames: 0 } },
-          { multi: true }
+        UserModel.updateMany({ dailyGames: { $gt: 0 } }, { $set: { dailyGames: 0
+          } }, { multi: true }
         )
     ); */
   }

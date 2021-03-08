@@ -7,6 +7,9 @@ import './lib/extensions';
 dotenv.config();
 const client = new ArimaClient();
 
+// this function will trigger on manual exits (^C and the like), as well as
+// errors. It's easier for pm2 to more seamlessly restart if we exit out of db
+// and other connections
 cleanup((exitCode, signal) => {
   (async () => {
     Logger.info(

@@ -154,6 +154,7 @@ export default class Playlist extends TimeStamps {
       const playlist = await PlaylistDoc.findOne({
         collaborators: id,
         title: {
+          // case insensitive
           $regex: new RegExp(`^${client.util.escapeRegex(query)}$`, 'i'),
         },
       })[lean ? 'lean' : 'exec']();

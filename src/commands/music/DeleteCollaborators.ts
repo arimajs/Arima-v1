@@ -52,6 +52,7 @@ export default class AddCollaboratorsCommand extends Command {
         'This playlist has no collaborators besides yourself'
       );
 
+    // remove duplicates
     const ids = [
       ...new Set(
         collaborators.flatMap((collaborator) =>

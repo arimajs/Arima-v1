@@ -34,8 +34,11 @@ export default class Song {
   public static async stream(
     song: Song
   ): Promise<ReturnType<typeof ytdl['arbitraryStream']>> {
+    // random number between 0 and (song_duration - 30000)
+    const seek = ~~(Math.random() * (song.duration / 1000 - 30));
     return song.progressive_url
       ? ytdl.arbitraryStream(
+          // saves memory and time
           await StreamDownloader.downloadProgressive(
             await Util.fetchSongStreamURL(
               song.progressive_url,
@@ -44,12 +47,14 @@ export default class Song {
           ),
           {
             opusEncoded: true,
-            seek: ~~(Math.random() * (song.duration / 1000 - 30)),
+            seek,
           }
         )
       : ytdl(song.url, {
           requestOptions: {
             headers: {
+              // prevent rate-limits TODO cycle through multiple cookies and
+              // tokens if needed
               cookie: process.env.YOUTUBE_COOKIE,
               'x-youtube-identity-token': process.env.YOUTUBE_ID_TOKEN,
             },
@@ -57,7 +62,7 @@ export default class Song {
           quality: 'highestaudio',
           filter: 'audioonly',
           opusEncoded: true,
-          seek: ~~(Math.random() * (song.duration / 1000 - 30)),
+          seek,
           highWaterMark: 1 << 24,
         });
   }
@@ -111,6 +116,8 @@ export default class Song {
 
       if (!song) return 'NO_RESULTS';
 
+      // you can't get song audio from spotify so the next best thing is to
+      // reroute it through youtube
       const video = await ytsr.searchOne(`${song.artist} - ${song.title}`);
       if (!video) return 'NO_RESULTS';
 

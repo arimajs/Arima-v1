@@ -27,16 +27,24 @@ export default abstract class ArimaCommand extends Command {
       game,
     } = options;
 
+    // every command needs these permissions
     (clientPermissions as string[]).push('SEND_MESSAGES', 'EMBED_LINKS');
 
     super(id, { ...options, args });
 
+    // args for the help command if you're using a generator
     this.argDescriptions =
       argDescriptions || (args as ArgumentOptions[]).slice(1);
     this.examples = examples;
     this.hidden = this.ownerOnly || hidden;
     this.usage = usage;
+
+    // `false` if a game must be in session, `true` if a game must *not* be in
+    // session
     this.game = game;
+
+    // if the `game` option is set it's safe to assume the command should only
+    // be used in guilds
     this.channel = this.game === undefined ? this.channel : 'guild';
   }
 
@@ -49,6 +57,7 @@ export default abstract class ArimaCommand extends Command {
         .get('error')!
         .exec(err, message, this);
 
+    // handle promise
     try {
       await Promise.resolve(this.run(message, args)).catch(handle);
     } catch (err) {

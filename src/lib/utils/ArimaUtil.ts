@@ -5,7 +5,11 @@ import { Guild as GuildDoc } from '../database';
 import Logger from './Logger';
 import { TextBasedChannel } from './types';
 
+// fns that don't require the client will forward to a static duplicate so it
+// can be used when the client object isn't accessible
 export default class ArimaUtil extends ClientUtil {
+  // if in dms return default prefix. Otherwise check for custom prefix and,
+  // again, fallback to default prefix
   public async prefix(guild: Guild | null): Promise<string> {
     return guild
       ? (await GuildDoc.findOne({ id: guild.id }).select('prefix').lean())
@@ -13,6 +17,8 @@ export default class ArimaUtil extends ClientUtil {
       : process.env.PREFIX!;
   }
 
+  // I don't want to require `USE_EXTERNAL_EMOJIS` permission so just check
+  // every time one is used and fallback to a unicode emoji
   public emoji<C extends string, U extends string>(
     custom: C,
     unicode: U,
@@ -37,6 +43,7 @@ export default class ArimaUtil extends ClientUtil {
     ifSo: S
   ): C | S {
     const [r, g, b] = color;
+    // formula to turn rgb to decimal
     return (r << 16) + (g << 8) + b === 3447003 ? ifSo : color;
   }
 
@@ -52,6 +59,7 @@ export default class ArimaUtil extends ClientUtil {
     return ArimaUtil.progressBar(value, max);
   }
 
+  // Example: ▬▬▬▬▬▬----- 50%
   public static progressBar(value: number, max: number): string {
     const percentage = value / max;
     const progress = Math.round(12 * percentage);
@@ -72,6 +80,7 @@ export default class ArimaUtil extends ClientUtil {
     return ArimaUtil.ordinal(num);
   }
 
+  // 1 = 1st, 2 = 2nd, 3 = 3rd, 4-x = xth
   public static ordinal(num: number): string {
     return `${num}${
       [null, 'st', 'nd', 'rd'][(num / 10) % 10 ^ 1 && num % 10] || 'th'
@@ -82,6 +91,7 @@ export default class ArimaUtil extends ClientUtil {
     return ArimaUtil.escapeRegex(str);
   }
 
+  // prevent injection
   public static escapeRegex(str: string): string {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
@@ -90,6 +100,7 @@ export default class ArimaUtil extends ClientUtil {
     return ArimaUtil.tap(value);
   }
 
+  // useful for debugging
   public static tap<T>(value: T): T {
     Logger.debug(value);
     return value;
@@ -99,6 +110,8 @@ export default class ArimaUtil extends ClientUtil {
     return ArimaUtil.shuffle(arr);
   }
 
+  // not the best algorithm but it doesn't have to be and es6 one-liners are
+  // pleasing to the eye
   public static shuffle<T extends unknown[]>(arr: T): T {
     return arr.sort(() => 0.5 - Math.random());
   }
@@ -107,6 +120,8 @@ export default class ArimaUtil extends ClientUtil {
     return ArimaUtil.chunk(arr, size);
   }
 
+  // separate arrays to chunks to different sizes
+  // chunk([1, 2, 3, 4, 5, 6, 7, 8, 9], 3) => [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   public static chunk<T>(arr: T[], size: number): T[][] {
     return [
       ...(Array(Math.ceil(arr.length / size)) as undefined[]),

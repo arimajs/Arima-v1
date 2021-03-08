@@ -11,6 +11,7 @@ export default class ReadyListener extends Listener {
   public exec(): void {
     Logger.info(`Bot logged in as ${this.client.user?.tag ?? 'Unknown#0000'}`);
 
+    // initialize bot list poster
     this.client.poster = new Poster({
       client: this.client,
       apiKeys: {
@@ -41,6 +42,8 @@ export default class ReadyListener extends Listener {
       this.client.poster.addHandler('autopostFail', (err) =>
         Logger.error(`Bot list posting error: `, err)
       );
+
+      // post every five minutes
       this.client.poster.startInterval();
 
       this.client.prom.metrics.serversJoined.set(
@@ -48,6 +51,7 @@ export default class ReadyListener extends Listener {
         this.client.guilds.cache.size
       );
 
+      // set system metrics on a 5 second update interval
       setInterval(() => {
         this.client.prom.metrics.ramUsage.set(
           {},

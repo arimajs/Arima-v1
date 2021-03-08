@@ -59,7 +59,8 @@ export default class SetChannelsCommand extends Command {
     else {
       const ids = channels.map((c) => c.id);
       settings.allowedChannels = restrict
-        ? (await guild!.channels.fetch(false))
+        ? // fetch all the guild's channels and filter those who are *not* listed
+          (await guild!.channels.fetch(false))
             .filter(({ id }) => !ids.includes(id))
             .keyArray()
         : ids;
