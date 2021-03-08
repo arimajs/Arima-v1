@@ -1,5 +1,6 @@
 import type { CommandOptions } from '@arimajs/discord-akairo';
-import type { Message, Snowflake } from 'discord.js-light';
+import type { Message } from 'discord.js-light';
+import { User as UserDoc } from 'src/lib/database/entities';
 import { User } from '../../lib/database';
 import Command from '../../lib/structures/Command';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
@@ -12,7 +13,7 @@ interface Args {
   aliases: ['leaderboard', 'lb'],
   description: "View this guild's leaderboard",
   channel: 'guild',
-  cooldown: 5000,
+  cooldown: 10000,
   args: [
     {
       id: 'global',
@@ -27,7 +28,10 @@ export default class LeaderboardCommand extends Command {
     const members = global
       ? null
       : (await message.guild!.members.fetch(false)).keyArray();
-    const [rankLeaderboard, levelLeaderboard] = await Promise.all([
+    const [rankLeaderboard, levelLeaderboard] = await Promise.all<
+      UserDoc[],
+      UserDoc[]
+    >([
       User.find(
         global
           ? { matchesPlayed: { $gt: 0 } }
@@ -46,6 +50,24 @@ export default class LeaderboardCommand extends Command {
         .lean(),
     ]);
 
+    const tags =
+      global &&
+      new Map(
+        await Promise.all(
+          [
+            ...new Set(
+              rankLeaderboard.concat(levelLeaderboard).map(({ id }) => id)
+            ),
+          ].map(
+            async (id) =>
+              [
+                id,
+                (await this.client.users.fetch(id).catch(() => null))?.tag,
+              ] as const
+          )
+        )
+      );
+
     message.embed(
       `${global ? 'Global' : `${message.guild!.name}'s`} Leaderboard`,
       (embed) =>
@@ -56,11 +78,11 @@ export default class LeaderboardCommand extends Command {
               ? rankLeaderboard
                   .map((user, idx) => {
                     const emoji = User.getEmoji(user.rank, message.channel);
-                    return `${this.client.util.ordinal(
-                      idx + 1
-                    )} Place • ${emoji} <@${
-                      ((user as unknown) as { id: Snowflake }).id
-                    }> ${emoji} • ${user.matchesWon}/${
+                    return `${this.client.util.ordinal(idx + 1)} • ${emoji} ${
+                      tags
+                        ? tags.get(user.id) ?? 'Unknown#4566'
+                        : `<@${user.id}>`
+                    } ${emoji} • ${user.matchesWon}/${
                       user.matchesPlayed
                     } Matches Won (${(
                       (user.matchesWon / user.matchesPlayed) *
@@ -76,11 +98,11 @@ export default class LeaderboardCommand extends Command {
               ? levelLeaderboard
                   .map((user, idx) => {
                     const emoji = User.getEmoji(user.rank, message.channel);
-                    return `${this.client.util.ordinal(
-                      idx + 1
-                    )} Place • ${emoji} <@${
-                      ((user as unknown) as { id: Snowflake }).id
-                    }> ${emoji} • Level ${Math.floor(user.level)} (${Math.floor(
+                    return `${this.client.util.ordinal(idx + 1)} • ${emoji} ${
+                      tags
+                        ? tags.get(user.id) ?? 'Unknown#4566'
+                        : `<@${user.id}>`
+                    } ${emoji} • Level ${Math.floor(user.level)} (${Math.floor(
                       user.xp
                     )} XP :star:)`;
                   })
