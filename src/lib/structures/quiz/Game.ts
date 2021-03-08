@@ -285,7 +285,7 @@ export default class Game {
     this.client.games.delete(this.guild.id);
     this.ended = true;
     this.guild.game = undefined;
-    this.connection?.dispatcher.removeAllListeners();
+    this.connection?.dispatcher?.removeAllListeners();
     this.connection?.dispatcher?.end();
     this.connection?.removeAllListeners();
     this.connection?.disconnect();
