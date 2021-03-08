@@ -21,7 +21,7 @@ interface Args {
   aliases: ['song-info', 'song'],
   description: "View a song's info",
   usage: '<playlist_name> <index>',
-  examples: ['vibing 5', 'classical 3'],
+  examples: ['vibing 5', '@Lioness100 classical 3'],
   argDescriptions: [
     {
       id: 'member',
@@ -52,17 +52,22 @@ interface Args {
       }) as GuildMember;
 
     const playlist = (yield {
-      type: ((message, phrase) =>
-        Playlist.resolvePlaylist(
+      type: ((message, phrase) => {
+        const playlist = Playlist.resolvePlaylist(
           phrase,
           message.client as ArimaClient,
           member!.id,
           true,
           true
-        )) as ArgumentTypeCaster,
+        );
+
+        return typeof playlist === 'string' ? null : playlist;
+      }) as ArgumentTypeCaster,
       prompt: {
         start: 'What playlist would you like to view?',
-        retry: 'Please provide the name of one of your custom playlists',
+        retry: `Please provide the name of one of ${
+          member!.id === message.author.id ? 'your' : `${member!.user.tag}'s`
+        } custom playlists`,
       },
     }) as Playlist;
 

@@ -40,26 +40,19 @@ interface Args {
   ],
   clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
   *args(): Generator<ArgumentOptions> {
-    const playlist = yield {
+    const playlist = (yield {
       type: 'custom-playlist',
       prompt: {
         start: 'What playlist would you like to delete from?',
         retry: 'Please provide the name of one of your custom playlists',
       },
-    };
+    }) as Playlist;
 
     const index = yield {
-      type: Argument.range(
-        'number',
-        1,
-        (playlist as Playlist).tracks.length,
-        true
-      ),
+      type: Argument.range('number', 1, playlist.tracks.length, true),
       prompt: {
         start: "What's the index of the song to delete?",
-        retry: `That's not a valid index (1-${
-          (playlist as Playlist).tracks.length
-        })`,
+        retry: `That's not a valid index (1-${playlist.tracks.length})`,
       },
     };
 

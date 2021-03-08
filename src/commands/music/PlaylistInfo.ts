@@ -18,7 +18,7 @@ interface Args {
   aliases: ['playlist-info', 'view-playlist'],
   description: "View a custom playlist's info",
   usage: '<name>',
-  examples: ['vibing', 'classical'],
+  examples: ['vibing', '@Lioness100 classical'],
   channel: 'guild',
   argDescriptions: [
     {
@@ -46,18 +46,23 @@ interface Args {
       }) as GuildMember;
 
     const playlist = yield {
-      type: ((message, phrase) =>
-        Playlist.resolvePlaylist(
+      type: ((message, phrase) => {
+        const playlist = Playlist.resolvePlaylist(
           phrase,
           message.client as ArimaClient,
           member!.id,
           true,
           true
-        )) as ArgumentTypeCaster,
+        );
+
+        return typeof playlist === 'string' ? null : playlist;
+      }) as ArgumentTypeCaster,
       match: 'rest',
       prompt: {
         start: 'What playlist would you like to view?',
-        retry: 'Please provide the name of one of your custom playlists',
+        retry: `Please provide the name of one of ${
+          member!.id === message.author.id ? 'your' : `${member!.user.tag}'s`
+        } custom playlists`,
       },
     };
 
