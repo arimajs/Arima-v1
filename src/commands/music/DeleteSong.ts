@@ -40,11 +40,6 @@ interface Args {
   ],
   clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
   *args(): Generator<ArgumentOptions> {
-    const help = yield {
-      match: 'flag',
-      flag: ['--h', '--help'],
-    };
-
     const playlist = yield {
       type: 'custom-playlist',
       prompt: {
@@ -68,7 +63,7 @@ interface Args {
       },
     };
 
-    return { help, playlist, index };
+    return { playlist, index };
   },
 })
 export default class DeleteSongCommand extends Command {

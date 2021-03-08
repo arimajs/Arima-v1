@@ -2,12 +2,14 @@ import {
   CommandOptions,
   Argument,
   ArgumentOptions,
+  ArgumentTypeCaster,
 } from '@arimajs/discord-akairo';
 import type { DocumentType } from '@typegoose/typegoose';
-import type { Message } from 'discord.js-light';
+import type { Message, GuildMember } from 'discord.js-light';
 import { formatDistanceToNowStrict } from 'date-fns';
-import type Playlist from '../../lib/database/entities/Playlist';
+import Playlist from '../../lib/database/entities/Playlist';
 import Command from '../../lib/structures/Command';
+import ArimaClient from '../../lib/client/ArimaClient';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
 
 interface Args {
@@ -22,6 +24,12 @@ interface Args {
   examples: ['vibing 5', 'classical 3'],
   argDescriptions: [
     {
+      id: 'member',
+      type: 'memberMention',
+      description:
+        'The member whose playlist to view (defaults to the command runner)',
+    },
+    {
       id: 'playlist',
       type: 'custom-playlist',
       description: 'Name of playlist to view songs from',
@@ -33,38 +41,40 @@ interface Args {
         "The index of the song (use `a!playlist-info` if you're not sure",
     },
   ],
-  *args(): Generator<ArgumentOptions> {
-    const help = yield {
-      match: 'flag',
-      flag: ['--h', '--help'],
-    };
+  *args(message, parser): Generator<ArgumentOptions> {
+    let { member } = message;
+    if (/(<@!?)?\d{17,18}>?/.test(parser.phrases[0].raw))
+      member = (yield {
+        type: 'memberMention',
+        prompt: {
+          retry: 'Please provide a valid member mention or id',
+        },
+      }) as GuildMember;
 
-    const playlist = yield {
-      type: 'lean-playlist',
+    const playlist = (yield {
+      type: ((message, phrase) =>
+        Playlist.resolvePlaylist(
+          phrase,
+          message.client as ArimaClient,
+          member!.id,
+          true,
+          true
+        )) as ArgumentTypeCaster,
       prompt: {
-        start: 'What playlist would you like to view',
+        start: 'What playlist would you like to view?',
         retry: 'Please provide the name of one of your custom playlists',
       },
-    };
+    }) as Playlist;
 
     const index = yield {
-      type: Argument.range(
-        'number',
-        1,
-        (playlist as Playlist).track_count,
-        true
-      ),
+      type: Argument.range('number', 1, playlist.track_count, true),
       prompt: {
-        start: `What's the index of the song to view? (1-${
-          (playlist as Playlist).track_count
-        })`,
-        retry: `That's not a valid index (1-${
-          (playlist as Playlist).tracks.length
-        })`,
+        start: `What's the index of the song to view? (1-${playlist.track_count})`,
+        retry: `That's not a valid index (1-${playlist.tracks.length})`,
       },
     };
 
-    return { help, playlist, index };
+    return { playlist, index };
   },
 })
 export default class SongInfoCommand extends Command {

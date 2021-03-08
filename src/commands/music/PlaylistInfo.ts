@@ -1,13 +1,16 @@
-import type { CommandOptions } from '@arimajs/discord-akairo';
-import type { Message } from 'discord.js-light';
+import type { CommandOptions, ArgumentOptions } from '@arimajs/discord-akairo';
+import type { GuildMember, Message } from 'discord.js-light';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { DocumentType } from '@typegoose/typegoose';
 import { commaListsAnd } from 'common-tags';
+import { ArgumentTypeCaster } from '@arimajs/discord-akairo';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
-import type Playlist from '../../lib/database/entities/Playlist';
+import Playlist from '../../lib/database/entities/Playlist';
+import ArimaClient from '../../lib/client/ArimaClient';
 import { EnhancedEmbed, Command } from '../../lib/structures';
 
 interface Args {
+  member: GuildMember;
   playlist: DocumentType<Playlist>;
 }
 
@@ -16,22 +19,56 @@ interface Args {
   description: "View a custom playlist's info",
   usage: '<name>',
   examples: ['vibing', 'classical'],
-  args: [
+  channel: 'guild',
+  argDescriptions: [
+    {
+      id: 'member',
+      type: 'memberMention',
+      description:
+        'The member whose playlist to view (defaults to the command runner)',
+    },
     {
       id: 'playlist',
-      type: 'lean-playlist',
+      type: 'playlist',
       match: 'rest',
       description: 'The name of the custom playlist to view',
+    },
+  ],
+  clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
+  *args(message, parser): Generator<ArgumentOptions> {
+    let { member } = message;
+    if (/(<@!?)?\d{17,18}>?/.test(parser.phrases[0].raw))
+      member = (yield {
+        type: 'memberMention',
+        prompt: {
+          retry: 'Please provide a valid member mention or id',
+        },
+      }) as GuildMember;
+
+    const playlist = yield {
+      type: ((message, phrase) =>
+        Playlist.resolvePlaylist(
+          phrase,
+          message.client as ArimaClient,
+          member!.id,
+          true,
+          true
+        )) as ArgumentTypeCaster,
+      match: 'rest',
       prompt: {
         start: 'What playlist would you like to view?',
         retry: 'Please provide the name of one of your custom playlists',
       },
-    },
-  ],
-  clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
+    };
+
+    return { member, playlist };
+  },
 })
 export default class PlaylistInfoCommand extends Command {
-  public async run(message: Message, { playlist }: Args): Promise<void> {
+  public async run(
+    message: Message,
+    { member, playlist }: Args
+  ): Promise<void> {
     if (!playlist.tracks.length)
       return message.error("There's no songs on this playlist");
 
@@ -88,7 +125,15 @@ export default class PlaylistInfoCommand extends Command {
                   : collaborators,
             },
           ])
-          .setFooter(`Use \`${prefix}song-info <index>\` to view a song's info`)
+          .setFooter(
+            `Use \`${prefix}song-info ${
+              member.id === message.author.id ? '' : `@${member.user.tag}`
+            } ${
+              playlist.title.split(' ').length > 1
+                ? `"${playlist.title}"`
+                : playlist.title
+            } <index>\` to view a song's info`
+          )
           .setColor(playlist.color as [number, number, number])
           .setThumbnail(playlist.thumbnail)
       )

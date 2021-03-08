@@ -3,7 +3,7 @@ import { DocumentType } from '@typegoose/typegoose';
 import { commaListsAnd } from 'common-tags';
 import { GuildMember, Message, Role } from 'discord.js-light';
 import type { Playlist } from '../../lib/database/entities';
-import { Logger, ApplyOptions } from '../../lib/utils';
+import ApplyOptions from '../../lib/utils/ApplyOptions';
 import Command from '../../lib/structures/Command';
 
 interface Args {
@@ -48,7 +48,6 @@ export default class AddCollaboratorsCommand extends Command {
     if (playlist.id !== message.author.id)
       return message.error("You don't own this playlist");
 
-    Logger.debug(typeof collaborators);
     const updatedCollaborators = [
       ...new Set(
         playlist.collaborators!.concat(

@@ -45,6 +45,9 @@ export default class CreatePlaylistCommand extends Command {
         'Accepted file extensions: `png`, `jpg`, `jpeg`, `gif`, `png`, and `svg`'
       );
 
+    if (name.includes('@'))
+      return message.error('Playlist names can\'t contain "@"');
+
     const playlists = await Playlist.find({
       collaborators: message.author.id,
     })
