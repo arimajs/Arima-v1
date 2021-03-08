@@ -5,6 +5,7 @@ import type {
   ArgumentOptions,
 } from '@arimajs/discord-akairo';
 import type { Poster } from '@arimajs/dbots';
+import type { Client } from '@arimajs/statcord.js';
 import type {
   Collection,
   Snowflake,
@@ -12,7 +13,6 @@ import type {
   EmbedFieldData,
 } from 'discord.js-light';
 import type Database from '../lib/database/Database';
-import type PromClient from '../lib/utils/PromClient';
 import type { TextBasedChannel } from '../lib/utils/types';
 import type { Player, Game, EnhancedEmbed } from '../lib/structures';
 
@@ -20,7 +20,7 @@ declare module '@arimajs/discord-akairo' {
   interface AkairoClient {
     db: Database;
     player: Player;
-    prom: PromClient;
+    stats?: Client;
     poster: Poster;
     commandHandler: CommandHandler;
     listenerHandler: ListenerHandler;

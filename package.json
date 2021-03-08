@@ -24,6 +24,7 @@
   "dependencies": {
     "@arimajs/dbots": "arimajs/dbots.js",
     "@arimajs/discord-akairo": "arimajs/discord-akairo#light",
+    "@arimajs/statcord.js": "arimajs/statcord.js",
     "@discordjs/opus": "^0.4.0",
     "@typegoose/typegoose": "^7.4.7",
     "@types/common-tags": "^1.8.0",
@@ -37,8 +38,6 @@
     "mongoose": "5.10.18",
     "node-cleanup": "^2.1.2",
     "node-schedule": "^2.0.0",
-    "os-utils": "^0.0.14",
-    "prom-client": "^13.1.0",
     "sodium": "^3.0.2",
     "soundcloud-scraper": "^4.0.3",
     "spotify-url-info": "^2.2.0",

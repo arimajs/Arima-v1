@@ -114,7 +114,6 @@ export default class Game {
   }
 
   public async start(): Promise<void> {
-    this.client.prom.metrics.matchStarted.inc();
     this.text.send(
       this.client.util
         .embed()
@@ -421,7 +420,6 @@ export default class Game {
   }
 
   private handleConnectionError(err: unknown) {
-    this.client.prom.metrics.errorCounter.inc();
     Logger.error(`Connection error: `, err);
     this.end('connection');
   }

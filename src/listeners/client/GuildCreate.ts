@@ -34,6 +34,5 @@ export default class Command extends Listener {
           )
       )
       .catch(() => {});
-    this.client.prom.metrics.serversJoined.inc();
   }
 }

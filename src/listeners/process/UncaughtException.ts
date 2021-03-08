@@ -7,7 +7,6 @@ import { ApplyOptions, Logger } from '../../lib/utils';
 })
 export default class UncaughtExceptionListener extends Listener {
   public exec(error: Error): void {
-    this.client.prom.metrics.errorCounter.inc();
     Logger.fatal('Encountered an uncaught exception: ', error);
   }
 }

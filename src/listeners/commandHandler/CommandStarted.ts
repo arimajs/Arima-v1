@@ -8,7 +8,7 @@ import { ApplyOptions, Logger } from '../../lib/utils';
 })
 export default class CommandStartedListener extends Listener {
   public exec(message: Message, command: Command): void {
-    this.client.prom.metrics.commandCounter.labels(command.aliases[0]).inc();
+    this.client.stats?.postCommand(command.aliases[0], message.author.id);
     Logger.debug(`${message.author.tag} triggered command '${command.id}'`);
   }
 }

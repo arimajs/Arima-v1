@@ -7,10 +7,11 @@ import {
   Flag,
 } from '@arimajs/discord-akairo';
 import { Poster } from '@arimajs/dbots';
+import { Client as StatCord } from '@arimajs/statcord.js';
 import { Collection, Message, MessageReaction, User } from 'discord.js-light';
 import { Client } from 'soundcloud-scraper';
 // import { scheduleJob } from 'node-schedule';
-import { ArimaUtil, Logger, PromClient } from '../utils';
+import { ArimaUtil, Logger } from '../utils';
 import { Database, Guild /* , User as UserModel */ } from '../database';
 import { Playlist, Song } from '../database/entities';
 import { Game } from '../structures';
@@ -22,7 +23,7 @@ export default class ArimaClient extends AkairoClient {
 
   public soundcloud = new Client();
 
-  public prom = new PromClient();
+  public stats?: StatCord;
 
   public poster!: Poster;
 
@@ -279,10 +280,13 @@ export default class ArimaClient extends AkairoClient {
     await this.db.init();
     Logger.info('Established connection to database');
 
-    this.prom.init();
-    Logger.info(
-      `Created Prometheus server at http://localhost:${process.env.PORT}/metrics`
-    );
+    if (process.env.STATCORD_API_TOKEN) {
+      this.stats = new StatCord({
+        client: this,
+        key: process.env.STATCORD_API_TOKEN,
+      });
+      Logger.info(`Connected to Statcord`);
+    }
 
     // TODO when Arima is accepted on top.gg
     /* scheduleJob('0 0 * * *',

@@ -1,4 +1,3 @@
-import { cpuUsage } from 'os-utils';
 import { Listener, ListenerOptions } from '@arimajs/discord-akairo';
 import { Poster } from '@arimajs/dbots';
 import { Logger, ApplyOptions } from '../../lib/utils';
@@ -10,6 +9,11 @@ import { Logger, ApplyOptions } from '../../lib/utils';
 export default class ReadyListener extends Listener {
   public exec(): void {
     Logger.info(`Bot logged in as ${this.client.user?.tag ?? 'Unknown#0000'}`);
+
+    // initialize statcord poster
+    this.client.stats
+      ?.autopost()
+      .catch((e) => Logger.fatal('Error when posting to statcord: ', e));
 
     // initialize bot list poster
     this.client.poster = new Poster({
@@ -46,25 +50,6 @@ export default class ReadyListener extends Listener {
 
       // post every five minutes
       this.client.poster.startInterval();
-
-      this.client.prom.metrics.serversJoined.set(
-        {},
-        this.client.guilds.cache.size
-      );
-
-      // set system metrics on a 5 second update interval
-      setInterval(() => {
-        this.client.prom.metrics.ramUsage.set(
-          {},
-          process.memoryUsage().heapUsed / 1024 / 1024
-        );
-
-        this.client.prom.metrics.ping.set({}, this.client.ws.ping);
-
-        cpuUsage((percentage) =>
-          this.client.prom.metrics.cpuUsage.set({}, percentage)
-        );
-      }, 5e3);
     }
   }
 }
