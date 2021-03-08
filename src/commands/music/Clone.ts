@@ -80,7 +80,6 @@ interface Args {
     // TODO a!rename-playlist and maybe other settings?
     // TODO statcord instead of prom-client
     // TODO Logger => Proxy
-    // TODO DBots list
     /* const name = yield {
       type: Argument.validate(
         'string',

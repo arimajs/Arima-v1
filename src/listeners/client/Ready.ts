@@ -21,6 +21,7 @@ export default class ReadyListener extends Listener {
         blist: process.env.BLIST_BOT_LIST_TOKEN!,
         botlistspace: process.env.SPACE_BOT_LIST_TOKEN!,
         botsdatabase: process.env.BOTS_DATABASE_BOT_LIST_TOKEN!,
+        dbots: process.env.DBOTS_BOT_LIST_TOKEN!,
         botsfordiscord: process.env.BOTS_FOR_DISCORD_BOT_LIST_TOKEN!,
         discordboats: process.env.DISCORD_BOATS_BOT_LIST_TOKEN!,
         discordbotlist: process.env.DISCORD_BOT_LIST_TOKEN!,
