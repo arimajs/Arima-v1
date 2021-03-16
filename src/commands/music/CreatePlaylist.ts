@@ -2,6 +2,7 @@ import { CommandOptions, Argument } from '@arimajs/discord-akairo';
 import type { Message } from 'discord.js-light';
 import { getColor } from 'colorthief';
 import { Playlist } from '../../lib/database';
+import { Playlist as PlaylistDoc } from '../../lib/database/entities';
 import Command from '../../lib/structures/Command';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
 
@@ -48,11 +49,11 @@ export default class CreatePlaylistCommand extends Command {
     if (name.includes('@'))
       return message.error('Playlist names can\'t contain "@"');
 
-    const playlists = await Playlist.find({
+    const playlists = (await Playlist.find({
       collaborators: message.author.id,
     })
       .select('title')
-      .lean();
+      .lean()) as PlaylistDoc[];
 
     if (playlists.some(({ title }) => title === name))
       return message.error(
@@ -60,7 +61,10 @@ export default class CreatePlaylistCommand extends Command {
       );
 
     // TODO: You can only have x playlists unless you support on patreon
-    if (playlists.length >= 3)
+    if (
+      playlists.filter((playlist) => playlist.id === message.author.id)
+        .length >= 3
+    )
       return message.error('You can only have 3 playlists');
 
     const thumbnail =
