@@ -37,7 +37,7 @@ interface Args {
   clientPermissions: ['ADD_REACTIONS', 'READ_MESSAGE_HISTORY'],
   *args(message, parser): Generator<ArgumentOptions> {
     let { member } = message;
-    if (/(<@!?)?\d{17,18}>?/.test(parser.phrases[0].raw))
+    if (/(<@!?)?\d{17,18}>?/.test(parser.phrases[0]?.raw))
       member = (yield {
         type: 'memberMention',
         prompt: {

@@ -14,6 +14,7 @@ export default class VoteCommand extends Command {
       embed.setDescription(
         stripIndents`Voting for Arima really helps the team out!
     
+        [Top.gg](https://top.gg/bot/809547125397782528)
         [Discord Bot List](https://discordbotlist.com/bots/arima/upvote)
 
         [Infinity Bot List](https://infinitybots.xyz/bots/809547125397782528/vote)
