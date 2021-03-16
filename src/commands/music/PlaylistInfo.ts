@@ -46,8 +46,8 @@ interface Args {
       }) as GuildMember;
 
     const playlist = yield {
-      type: ((message, phrase) => {
-        const playlist = Playlist.resolvePlaylist(
+      type: (async (message, phrase) => {
+        const playlist = await Playlist.resolvePlaylist(
           phrase,
           message.client as ArimaClient,
           member!.id,

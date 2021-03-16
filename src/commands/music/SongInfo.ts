@@ -3,6 +3,7 @@ import {
   Argument,
   ArgumentOptions,
   ArgumentTypeCaster,
+  Flag,
 } from '@arimajs/discord-akairo';
 import type { DocumentType } from '@typegoose/typegoose';
 import type { Message, GuildMember } from 'discord.js-light';
@@ -22,6 +23,7 @@ interface Args {
   description: "View a song's info",
   usage: '<playlist_name> <index>',
   examples: ['vibing 5', '@Lioness100 classical 3'],
+  channel: 'guild',
   argDescriptions: [
     {
       id: 'member',
@@ -52,8 +54,8 @@ interface Args {
       }) as GuildMember;
 
     const playlist = (yield {
-      type: ((message, phrase) => {
-        const playlist = Playlist.resolvePlaylist(
+      type: (async (message, phrase) => {
+        const playlist = await Playlist.resolvePlaylist(
           phrase,
           message.client as ArimaClient,
           member!.id,
@@ -61,7 +63,7 @@ interface Args {
           true
         );
 
-        return typeof playlist === 'string' ? null : playlist;
+        return typeof playlist === 'string' ? Flag.fail(playlist) : playlist;
       }) as ArgumentTypeCaster,
       prompt: {
         start: 'What playlist would you like to view?',
