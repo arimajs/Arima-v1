@@ -24,7 +24,8 @@ export default class VoteCommand extends Command {
         [Void Bot List](https://voidbots.net/bot/809547125397782528/vote)
         [Blist](https://blist.xyz/bot/809547125397782528/vote)
         [Extreme Bot List](https://discordextremelist.xyz/en-US/bots/809547125397782528/upvote)
-        [DBots](https://dbots.co/dashboard/bots/809547125397782528)`
+        [DBots](https://dbots.co/dashboard/bots/809547125397782528)
+        [Blade Bot List](https://bladebotlist.xyz/bot/809547125397782528/vote)`
       )
     );
   }
