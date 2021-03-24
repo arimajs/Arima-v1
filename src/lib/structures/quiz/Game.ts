@@ -165,10 +165,11 @@ export default class Game {
       // I don't really get the difference between `destroy()`, `close()`, and
       // `end()`, but whenever I use them it's because I want to try to save
       // memory by destroying/closing/ending stuff once I'm done with them
+      this.stream?.emit('close');
       this.stream?.destroy();
       this.stream = await Song.stream(song);
       this.connection.removeAllListeners();
-      this.connection.dispatcher?.end();
+      this.connection.dispatcher?.destroy();
       this.connection
         .once('error', this.handleConnectionError.bind(this))
         .play(this.stream, {
@@ -288,6 +289,7 @@ export default class Game {
     this.connection?.dispatcher?.end();
     this.connection?.removeAllListeners();
     this.connection?.disconnect();
+    this.stream?.emit('close');
     this.stream?.destroy();
     this.collector?.removeAllListeners();
     this.collector?.stop('force');
