@@ -4,7 +4,7 @@ import type {
   InhibitorHandler,
   ArgumentOptions,
 } from '@arimajs/discord-akairo';
-import type { Poster } from '@arimajs/dbots';
+import type { Poster } from 'dbots';
 import type { Client } from '@arimajs/statcord.js';
 import type {
   Collection,

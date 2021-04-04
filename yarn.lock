@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@arimajs/dbots@arimajs/dbots.js":
-  version "8.0.1"
-  resolved "https://codeload.github.com/arimajs/dbots.js/tar.gz/2b6efbf9b8a4b9ef8af842ac7b3c62e789d12828"
-  dependencies:
-    axios "^0.21.0"
-    promise.allsettled "^1.0.2"
-
 "@arimajs/discord-akairo@arimajs/discord-akairo#light":
   version "8.1.0"
   resolved "https://codeload.github.com/arimajs/discord-akairo/tar.gz/031be5bcdf0daf87e5c8cc97565ef971bba6b3a2"

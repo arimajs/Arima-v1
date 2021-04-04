@@ -22,15 +22,14 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@arimajs/dbots": "arimajs/dbots.js",
     "@arimajs/discord-akairo": "arimajs/discord-akairo#light",
     "@arimajs/statcord.js": "arimajs/statcord.js",
     "@discordjs/opus": "^0.4.0",
     "@typegoose/typegoose": "^7.4.7",
-    "@types/common-tags": "^1.8.0",
     "colorthief": "^2.3.2",
     "common-tags": "^1.8.0",
     "date-fns": "^2.16.1",
+    "dbots": "git://github.com/dbots-pkg/dbots.js#master",
     "discord-ytdl-core": "^5.0.0",
     "discord.js-light": "3.5.3",
     "dotenv": "^8.2.0",
@@ -46,6 +45,7 @@
     "ytdl-core": "^4.4.5"
   },
   "devDependencies": {
+    "@types/common-tags": "^1.8.0",
     "@types/mongoose": "^5.10.3",
     "@types/node": "^14.14.20",
     "@types/node-cleanup": "^2.1.1",

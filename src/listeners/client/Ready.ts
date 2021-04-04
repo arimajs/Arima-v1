@@ -1,5 +1,5 @@
 import { Listener, ListenerOptions } from '@arimajs/discord-akairo';
-import { Poster } from '@arimajs/dbots';
+import { Poster } from 'dbots';
 import { Logger, ApplyOptions } from '../../lib/utils';
 
 @ApplyOptions<ListenerOptions>('ready', {
@@ -19,23 +19,19 @@ export default class ReadyListener extends Listener {
     this.client.poster = new Poster({
       client: this.client,
       apiKeys: {
-        arcane: process.env.ARCANE_BOT_LIST_TOKEN!,
         astrobotlist: process.env.ASTRO_BOT_LIST_TOKEN!,
         bladebotlist: process.env.BLADE_BOT_LIST_TOKEN!,
         blist: process.env.BLIST_BOT_LIST_TOKEN!,
         botlistspace: process.env.SPACE_BOT_LIST_TOKEN!,
-        botsdatabase: process.env.BOTS_DATABASE_BOT_LIST_TOKEN!,
         dbots: process.env.DBOTS_BOT_LIST_TOKEN!,
         botsfordiscord: process.env.BOTS_FOR_DISCORD_BOT_LIST_TOKEN!,
         discordboats: process.env.DISCORD_BOATS_BOT_LIST_TOKEN!,
         discordbotlist: process.env.DISCORD_BOT_LIST_TOKEN!,
-        discordbotdirectory: process.env.DISCORD_BOT_DIRECTORY_BOT_LIST_TOKEN!,
         discordbotsgg: process.env.DISCORD_BOTS_GG_BOT_LIST_TOKEN!,
         discordextremelist: process.env.DISCORD_EXTREME_LIST_BOT_LIST_TOKEN!,
         discordlistology: process.env.DISCORD_LISTOLOGY_BOT_LIST_TOKEN!,
         discordservices: process.env.DISCORD_SERVICES_BOT_LIST_TOKEN!,
         infinitybots: process.env.INFINITY_BOT_LIST_TOKEN!,
-        paradisebots: process.env.PARADISE_BOT_LIST_TOKEN!,
         topgg: process.env.TOP_GG_BOT_LIST_TOKEN!,
         voidbots: process.env.VOID_BOT_LIST_TOKEN!,
         yabl: process.env.YET_ANOTHER_BOT_LIST_TOKEN!,
