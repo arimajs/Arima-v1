@@ -1,25 +1,27 @@
+/* eslint-disable prefer-const */
 import {
   Argument,
   CommandOptions,
   Flag,
   PromptContentSupplier,
 } from '@arimajs/discord-akairo';
-// import { Service } from '@arimajs/dbots';
+import { Service } from 'dbots';
+import { DocumentType } from '@typegoose/typegoose';
 import { Document } from 'mongoose';
 import type { Message, TextChannel, VoiceChannel } from 'discord.js';
-// import { AxiosResponse } from '@arimajs/dbots/lib/Utils/FormatRequest';
+import { AxiosResponse } from 'dbots/lib/Utils/FormatRequest';
 import type Playlist from '../../lib/database/entities/Playlist';
-// import { User } from '../../lib/database';
-// import { User as UserDoc } from '../../lib/database/entities';
+import { User } from '../../lib/database';
+import { User as UserDoc } from '../../lib/database/entities';
 import { Command, Game } from '../../lib/structures';
 import ApplyOptions from '../../lib/utils/ApplyOptions';
 
-/* interface TopGG extends Service {
+interface TopGG extends Service {
   userVoted(
     id: string,
     userID: string
   ): Promise<AxiosResponse<{ voted: 0 | 1 }>>;
-} */
+}
 
 interface Args {
   playlist: Playlist;
@@ -140,26 +142,35 @@ export default class StartCommand extends Command {
 
     await message.guild!.me!.voice.setSelfDeaf(true);
 
-    const [text /* , user, { data: { voted }} */] = (await Promise.all([
+    let [
+      text,
+      user,
+      {
+        data: { voted },
+      },
+    ] = (await Promise.all([
       this.client.channels.fetch(message.channel.id, false) as unknown,
-      /* User.findOne({ id: message.author.id }) ||
-        new User({ id: message.author.id, dailyGames: 0 }),
+      User.findOne({ id: message.author.id }),
       (this.client.poster.getService('topgg') as TopGG).userVoted(
         this.client.user!.id,
         message.author.id
-      ), */
+      ),
     ])) as [
-      TextChannel /* , UserDoc, Promise<AxiosResponse<{ voted: 0 | 1 }>> */
+      TextChannel,
+      DocumentType<UserDoc> | null,
+      AxiosResponse<{ voted: 0 | 1 }>
     ];
 
-    /* if (user.dailyGames === 3 && !voted)
+    user ??= new User({ id: message.author.id, dailyGames: 0 });
+    if (user.dailyGames === 3 && !voted)
       return message.error(
         "You've already reached the max 3 games per day",
         "If you'd like to play more, please vote for Arima [here](https://top.gg/bot/809547125397782528), and the restriction will be lifted"
       );
 
     user.dailyGames++;
-    user.save(); */
+    console.log(user.dailyGames);
+    user.save().then((user) => console.log(user.dailyGames));
 
     try {
       new Game({

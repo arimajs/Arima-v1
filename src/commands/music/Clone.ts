@@ -78,7 +78,6 @@ interface Args {
 
     // TODO annoy computer1 until this is fixed
     // TODO a!rename-playlist and maybe other settings?
-    // TODO statcord instead of prom-client
     /* const name = yield {
       type: Argument.validate(
         'string',

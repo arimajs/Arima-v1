@@ -6,13 +6,13 @@ import {
   ListenerHandler,
   Flag,
 } from '@arimajs/discord-akairo';
-import { Poster } from '@arimajs/dbots';
+import { Poster } from 'dbots';
 import { Client as StatCord } from '@arimajs/statcord.js';
 import { Collection, Message, MessageReaction, User } from 'discord.js-light';
 import { Client } from 'soundcloud-scraper';
-// import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from 'node-schedule';
 import { ArimaUtil, Logger } from '../utils';
-import { Database, Guild /* , User as UserModel */ } from '../database';
+import { Database, Guild, User as UserModel } from '../database';
 import { Playlist, Song } from '../database/entities';
 import { Game } from '../structures';
 
@@ -284,16 +284,19 @@ export default class ArimaClient extends AkairoClient {
       this.stats = new StatCord({
         client: this,
         key: process.env.STATCORD_API_TOKEN,
+        postCpuStatistics: false,
+        postMemStatistics: false,
+        postNetworkStatistics: false,
       });
       Logger.info(`Connected to Statcord`);
     }
 
-    // TODO when Arima is accepted on top.gg
-    /* scheduleJob('0 0 * * *',
-      () =>
-        UserModel.updateMany({ dailyGames: { $gt: 0 } }, { $set: { dailyGames: 0
-          } }, { multi: true }
-        )
-    ); */
+    scheduleJob('0 0 * * *', () => {
+      UserModel.updateMany(
+        { dailyGames: { $gt: 0 } },
+        { $set: { dailyGames: 0 } },
+        { multi: true }
+      );
+    });
   }
 }

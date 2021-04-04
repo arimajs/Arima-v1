@@ -60,7 +60,7 @@ export default class PrefixCommand extends Command {
         "This is to make sure it doesn't overlap with channel mentions, user mentions, or emotes"
       );
 
-    settings ||= new Guild({ id: message.guild.id });
+    settings ??= new Guild({ id: message.guild.id });
     settings.prefix = prefix;
 
     try {
