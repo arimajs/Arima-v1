@@ -1,7 +1,7 @@
 import { prop } from '@typegoose/typegoose';
 import ytdl from 'discord-ytdl-core';
 import ytsr, { Video } from 'youtube-sr';
-import { Util, StreamDownloader, Store } from 'soundcloud-scraper';
+import { Util, StreamDownloader } from 'soundcloud-scraper';
 import { getPreview } from 'spotify-url-info';
 import { getColor } from 'colorthief';
 import { WhatIsIt } from '@typegoose/typegoose/lib/internal/constants';
@@ -40,10 +40,7 @@ export default class Song {
       ? ytdl.arbitraryStream(
           // saves memory and time
           await StreamDownloader.downloadProgressive(
-            await Util.fetchSongStreamURL(
-              song.progressive_url,
-              Store.get('SOUNDCLOUD_API_KEY')!
-            )
+            await Util.fetchSongStreamURL(song.progressive_url)
           ),
           {
             opusEncoded: true,

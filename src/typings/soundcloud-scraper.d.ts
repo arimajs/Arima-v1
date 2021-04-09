@@ -41,7 +41,7 @@ declare module 'soundcloud-scraper' {
   export class Util {
     static validateURL(url: URL, type?: 'track' | 'playlist'): boolean;
 
-    static fetchSongStreamURL(url: URL, clientID: string): Promise<string>;
+    static fetchSongStreamURL(url: URL, clientID?: string): Promise<string>;
   }
 
   export class StreamDownloader {
