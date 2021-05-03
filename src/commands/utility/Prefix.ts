@@ -54,9 +54,9 @@ export default class PrefixCommand extends Command {
         'Please keep the prefix length to under 100 characters'
       );
 
-    if (/[!@:]/.test(prefix))
+    if (/[#@:]/.test(prefix))
       return message.error(
-        'Please remove `!`, `@`, and/or `:` from the prefix',
+        'Please remove `#`, `@`, and/or `:` from the prefix',
         "This is to make sure it doesn't overlap with channel mentions, user mentions, or emotes"
       );
 
