@@ -288,7 +288,7 @@ export default class Game {
     this.connection?.dispatcher?.removeAllListeners();
     this.connection?.dispatcher?.end();
     this.connection?.removeAllListeners();
-    this.connection?.disconnect();
+    if (this.connection.status === 0) this.connection?.disconnect();
     this.stream?.emit('close');
     this.stream?.destroy();
     this.collector?.removeAllListeners();
