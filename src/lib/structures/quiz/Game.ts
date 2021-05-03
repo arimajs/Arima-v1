@@ -422,6 +422,20 @@ export default class Game {
   }
 
   private handleConnectionError(err: unknown) {
+    if (
+      err instanceof Error &&
+      (err as NodeJS.ErrnoException).code === 'ENOMEM'
+    ) {
+      this.text
+        .send(
+          this.client.util
+            .embed()
+            .setColor('RED')
+            .setTitle('Arima ran out of memory!')
+            .setDescription("I'm restarting now; hang in there!")
+        )
+        .then(() => process.exit(1));
+    }
     Logger.error(`Connection error: `, err);
     this.end('connection');
   }
