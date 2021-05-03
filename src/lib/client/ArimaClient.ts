@@ -296,7 +296,9 @@ export default class ArimaClient extends AkairoClient {
         { dailyGames: { $gt: 0 } },
         { $set: { dailyGames: 0 } },
         { multi: true }
-      );
+      ).then((res: { nModified: number }) => {
+        Logger.info(`Modified ${res.nModified} documents`);
+      });
     });
   }
 }
