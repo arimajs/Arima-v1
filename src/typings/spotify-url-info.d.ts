@@ -13,6 +13,7 @@ declare module 'spotify-url-info' {
     external_urls: ExternalURLs;
     duration_ms: number;
     name: string;
+    track: boolean;
   }
 
   export interface SongPreview {

@@ -58,7 +58,9 @@ export default class Playlist extends TimeStamps {
       ).catch(() => {})) as SpotifyPlaylist | void;
       if (!playlist) return 'NO_RESULTS';
 
-      const available = playlist.tracks.items.filter(({ track }) => track);
+      const available = playlist.tracks.items.filter(
+        ({ track }) => track?.track
+      );
       if (!available.length) return 'NO_TRACKS';
 
       const thumbnail = playlist.images[0].url;
